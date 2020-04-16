@@ -22,6 +22,7 @@ class ZController {
     this.listCustomersEl = document.querySelector('#list-customers');
     this.listProjectCustomersEl = document.querySelector('#list-projects-customers');
 
+    this.customerKey = '';
     this.projectKey = '';
     this.solutionKey = '';
 
@@ -55,11 +56,13 @@ class ZController {
 
   initEvents() {
 
-    this.tableProjectTh.style.visibility = 'hidden';
-    this.listCustomersEl.style.visibility = 'hidden';
-    this.listProjectCustomersEl.visibility = 'hidden';
+    // this.tableProjectTh.style.visibility = 'hidden';
+    // this.listCustomersEl.style.visibility = 'hidden';
+    // this.listProjectCustomersEl.visibility = 'hidden';
 
     this.btnSalvar.addEventListener('click', e => {
+
+      let timestampNow = Date.now();
 
       let name = this.inputName.value;
       let cpf = this.inputCpf.value;
@@ -71,11 +74,12 @@ class ZController {
       let state = this.inputState.value;
       let zip = this.inputZip.value;
 
+      this.customerKey = cpf;
+
       if (name) {
 
-        //let path = 'ssa/customers';
-
         this.getFirebaseRef().set({
+          timestampNow,
           name,
           cpf,
           celular,
@@ -97,11 +101,11 @@ class ZController {
         this.inputState.value = '';
         this.inputZip.value = '';
 
-        this.formAddCustomer.style.visibility = 'hidden';
+        // this.formAddCustomer.style.visibility = 'hidden';
 
-        this.tableProjectTh.style.visibility = 'visible';
-        this.listCustomersEl.style.visibility = 'visible';
-        this.listProjectCustomersEl.visibility = 'visible';
+        // this.tableProjectTh.style.visibility = 'visible';
+        // this.listCustomersEl.style.visibility = 'visible';
+        // this.listProjectCustomersEl.visibility = 'visible';
 
       } else {
 
@@ -116,9 +120,7 @@ class ZController {
 
   getFirebaseRef(path) {
 
-    let cpf = this.inputCpf.value;
-
-    if (!path) path = 'ssa/customers/' + cpf;
+    if (!path) path = 'ssa/customers/' + this.customerKey;
 
     return firebase.database().ref(path);
 
@@ -130,13 +132,11 @@ class ZController {
     let li = document.createElement('li');
 
     li.dataset.key = key;
-    li.dataset.file = JSON.stringify(data);
+    // li.dataset.file = JSON.stringify(data);
 
-    {/* <div>${JSON.stringify(data.projects.projectName)}</div> */ }
     li.innerHTML = `
       <div class="list-group-item d-flex justify-content-between align-items-center"><span>${data.name}</span><span>${data.cpf}</span><span>${data.email}</span>
       <span><button type="button" class="btn" id="btn-add-project"><img src="src/img/icons/add-circle-outline.svg" alt="add" width="18px"/></button></span></div>
-      
     `;
 
     this.initEventsLi(li);
@@ -168,7 +168,7 @@ class ZController {
 
   readCustomers() {
 
-    this.getFirebaseRef().limitToLast(1).on('value', snapshot => {
+    this.getFirebaseRef().on('value', snapshot => {
 
       this.listCustomersEl.innerHTML = '';
 
@@ -176,8 +176,6 @@ class ZController {
 
         let key = snapshotItem.key;
         let data = snapshotItem.val();
-
-        // console.log(data);
 
         if (data) {
 
