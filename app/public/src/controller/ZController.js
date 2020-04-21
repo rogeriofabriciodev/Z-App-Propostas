@@ -2,6 +2,33 @@ class ZController {
 
   constructor() {
 
+    // Form to consult customers
+    this.formConsutlCustomers = document.querySelector('#form-consult-customer');
+    this.consultNameEl = document.querySelector('#consult-name');
+    this.btnConsultCustomersEl = document.querySelector('#btn-consult-customers');
+
+    // Modal Button to open form to create a new Project
+    this.btnNewProjectEl = document.querySelector('#btn-new-project');
+
+    // Modal Button to open form to create a new Solution
+    this.btnNewSolutionEl = document.querySelector('#btn-new-solution');
+
+    // Modal Title Project
+    this.projectTitleEl = document.querySelector('#project-title');
+
+    // Modal Title Solution
+    this.solutionTitleEl = document.querySelector('#solution-title');
+
+    // Table Title
+    this.tableTitleEl = document.querySelector('#table-title');
+
+    // Button to close all modal list
+    this.btnModalCloseProjectsEl = document.querySelector('.btn-modal-close-project');
+
+    // Button to close modal Solution
+    this.btnModalCloseSolutionEl = document.querySelector('.btn-modal-close-solution');
+
+    // Form to add Customer
     this.formAddCustomer = document.querySelector('#form-add-customer');
     this.inputName = document.querySelector('#inputName');
     this.inputCpf = document.querySelector('#inputCpf');
@@ -13,24 +40,48 @@ class ZController {
     this.inputState = document.querySelector('#inputState');
     this.inputZip = document.querySelector('#inputZip');
 
-    this.btnSalvar = document.querySelector('#btnSalvar');
-    this.btnAddProject = document.querySelector('#btn-add-project');
+    // Button to save customer's data in database
+    this.btnSaveCustomerEl = document.querySelector('#btn-save-customer');
+
+    // Button to add Project in database
+    this.btnProject = document.querySelector('#btn-add-project');
+
+    // Button to add Solution in database
     this.btnAddSolution = document.querySelector('#btn-add-solution');
 
-    this.tableProjectTh = document.querySelector('#table-projects-th');
-
+    // li of Customer's list
     this.listCustomersEl = document.querySelector('#list-customers');
+
+    // li of Projects by Customer's  list
     this.listProjectCustomersEl = document.querySelector('#list-projects-customers');
 
+    // li of Projects by Customer's  list
+    this.listSolutionsProjectsCustomersEl = document.querySelector('#list-solutions-projects-customers');
+    
+    // Customer's key
     this.customerKey = '';
+
+    // Customer's Name
+    this.customerName = '';
+
+    // Project's key
     this.projectKey = '';
+
+    // Project's name
+    this.projectName = '';
+
+    // Path to save Solution into Project
+    this.refProjectCustomer = '';
+
+    // Solution's key
     this.solutionKey = '';
+    
+    // Projects's th title
+    this.tableProjectTh = document.querySelector('#table-projects-th');
 
     this.connectFirebase();
-    this.readCustomers();
+    this.readAllCustomers();
     this.initEvents();
-
-
 
   }
 
@@ -56,11 +107,56 @@ class ZController {
 
   initEvents() {
 
-    // this.tableProjectTh.style.visibility = 'hidden';
-    // this.listCustomersEl.style.visibility = 'hidden';
-    // this.listProjectCustomersEl.visibility = 'hidden';
+    this.btnNewProjectEl.addEventListener('click', e => {
 
-    this.btnSalvar.addEventListener('click', e => {
+      this.addNewProject();
+
+    });
+
+
+
+    this.btnNewSolutionEl.addEventListener('click', e => {
+
+      this.addNewSolution();
+
+    });
+
+
+
+    this.btnConsultCustomersEl.addEventListener('click', e => {
+
+      let consultName = this.consultNameEl.value;
+
+      if (consultName !== '') {
+
+        this.readConsultCustomers(consultName);
+        
+      } else {
+
+        console.log('Campo nome vazio');
+
+        this.listCustomersEl.innerHTML = '';
+
+      }
+
+    });
+
+
+    this.btnModalCloseProjectsEl.addEventListener('click', e => {
+
+      $('#modal-list-projects').modal('hide');
+
+    });
+
+    this.btnModalCloseSolutionEl.addEventListener('click', e => {
+
+      $('#modal-list-solutions').modal('hide');
+
+    });
+
+
+
+    this.btnSaveCustomerEl.addEventListener('click', e => {
 
       let timestampNow = Date.now();
 
@@ -74,9 +170,9 @@ class ZController {
       let state = this.inputState.value;
       let zip = this.inputZip.value;
 
-      this.customerKey = cpf;
-
       if (name) {
+
+        this.customerKey = timestampNow;
 
         this.getFirebaseRef().set({
           timestampNow,
@@ -101,11 +197,7 @@ class ZController {
         this.inputState.value = '';
         this.inputZip.value = '';
 
-        // this.formAddCustomer.style.visibility = 'hidden';
-
-        // this.tableProjectTh.style.visibility = 'visible';
-        // this.listCustomersEl.style.visibility = 'visible';
-        // this.listProjectCustomersEl.visibility = 'visible';
+        $('#modal-add-customers').modal('hide');
 
       } else {
 
@@ -113,9 +205,48 @@ class ZController {
 
       }
 
+      this.addNewProject();
+
     });
 
   }
+
+
+  addNewProject() {
+
+    let newProject = prompt('Nome do novo projeto:');
+
+    if (newProject) {
+
+      let refCustomer = 'ssa/customers/' + this.customerKey + '/projects';
+
+      firebase.database().ref(refCustomer).push().set({
+        projectName: newProject
+      });
+
+    }
+
+  }
+
+
+  addNewSolution() {
+
+    let newSolution = prompt('Nome da nova solução:');
+
+    if (newSolution) {
+
+      // this.projectKey = li.dataset.key;
+
+      //this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey;
+
+      firebase.database().ref(this.refProjectCustomer).push().set({
+        solutionName: newSolution
+      });
+
+    }
+
+  }
+  
 
 
   getFirebaseRef(path) {
@@ -127,16 +258,16 @@ class ZController {
   }
 
 
-  getCustomerView(data, key) {
+  getConsultCustomerView(data, key) {
 
     let li = document.createElement('li');
 
     li.dataset.key = key;
-    // li.dataset.file = JSON.stringify(data);
+    li.dataset.file = JSON.stringify(data);
 
     li.innerHTML = `
       <div class="list-group-item d-flex justify-content-between align-items-center"><span>${data.name}</span><span>${data.cpf}</span><span>${data.email}</span>
-      <span><button type="button" class="btn" id="btn-add-project"><img src="src/img/icons/add-circle-outline.svg" alt="add" width="18px"/></button></span></div>
+      <span><button type="button" class="btn" id="btn-project"><img src="src/img/icons/add-circle-outline.svg" alt="add" width="18px"/></button></span></div>
     `;
 
     this.initEventsLi(li);
@@ -144,6 +275,129 @@ class ZController {
     return li;
 
   }
+
+
+  readConsultCustomers(consultName) {
+
+    let getConsultName = consultName;
+
+    this.getFirebaseRef().orderByChild("name").startAt(getConsultName).on('value', snapshot => {
+
+      this.listCustomersEl.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        if (data !== '' ) {
+
+          this.listCustomersEl.appendChild(this.getConsultCustomerView(data, key));
+
+        } else {
+
+          this.listCustomersEl.innerHTML = '';
+
+        }
+
+      });
+
+    });
+
+  }
+
+
+
+  readConsultCustomerById(id) {
+
+    this.customerKey = id;
+
+    let refPath = firebase.database().ref('ssa/customers/' + this.customerKey + '/');
+
+    refPath.on('value', snapshot => {
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+      });
+
+      this.customerName = snapshot.val().name;
+
+    });
+
+  }
+
+
+  
+  readConsultProjectCustomerById(id) {
+
+    this.projectKey = id;
+
+    let refPath = firebase.database().ref('ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/');
+
+    refPath.on('value', snapshot => {
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+      });
+
+      this.projectName = snapshot.val().projectName;
+
+    });
+
+  }
+
+
+
+  getAllCustomerView(data, key) {
+
+    let li = document.createElement('li');
+
+    li.dataset.key = key;
+    li.dataset.file = JSON.stringify(data);
+
+    li.innerHTML = `
+      <div class="list-group-item d-flex justify-content-between align-items-center"><span>${data.name}</span><span>${data.cpf}</span><span>${data.email}</span>
+      <span><button type="button" class="btn" id="btn-project"><img src="src/img/icons/add-circle-outline.svg" alt="add" width="18px"/></button></span></div>
+    `;
+
+    this.initEventsLi(li);
+
+    return li;
+
+  }
+
+
+
+  readAllCustomers() {
+
+    this.getFirebaseRef().orderByChild("name").on('value', snapshot => {
+
+      this.listCustomersEl.innerHTML = '';
+      this.tableTitleEl.innerHTML = 'Clientes';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        if (data !== '') {
+
+          this.listCustomersEl.appendChild(this.getAllCustomerView(data, key));
+
+        }
+
+      });
+
+    });
+
+  }
+
 
 
   getProjectCustomerView(data, key) {
@@ -166,79 +420,117 @@ class ZController {
 
 
 
-  readCustomers() {
+  getSolutionProjectCustomerView(data, key) {
 
-    this.getFirebaseRef().on('value', snapshot => {
+    let li = document.createElement('li');
 
-      this.listCustomersEl.innerHTML = '';
+    li.dataset.key = key;
+    li.dataset.file = JSON.stringify(data);
 
-      snapshot.forEach(snapshotItem => {
+    li.innerHTML = `
+      <div class="list-group-item d-flex justify-content-between align-items-center"><span>${data.solutionName}</span>
+      <span><button type="button" class="btn" id="btn-add-product"><img src="src/img/icons/add-circle-outline.svg" alt="add" width="18px"/></button></span></div>
+    `;
 
-        let key = snapshotItem.key;
-        let data = snapshotItem.val();
+    this.initEventsLi(li);
 
-        if (data) {
-
-          this.listCustomersEl.appendChild(this.getCustomerView(data, key));
-
-        }
-
-      });
-
-    });
+    return li;
 
   }
 
 
+  
   initEventsLi(li) {
 
     let key;
     let refCustomer;
 
-    li.addEventListener('dblclick', e => {
-
-      let newProject = prompt('Nome do novo projeto:');
-
-      if (newProject) {
-
-        key = li.dataset.key;
-
-        refCustomer = 'ssa/customers/' + key + '/projects';
-
-        firebase.database().ref(refCustomer).push().set({
-          projectName: newProject
-        });
-
-      }
-
-    });
-
 
     li.addEventListener('click', e => {
 
+      // Get value of id li
       let btnID = e.path[1].id;
+
+      // Customer's Key
+      let lastLiKey = li.dataset.key;
 
       if (btnID) {
 
         switch (btnID) {
-          case 'btn-add-project':
-            this.projectKey = li.dataset.key;
+          case 'btn-project':
+
+            this.customerKey = lastLiKey;
+
+            refCustomer = 'ssa/customers/' + this.customerKey + '/projects';
+
+            $('#modal-list-projects').modal('show');
+
+            firebase.database().ref(refCustomer).on('value', snapshot => {
+
+              this.listProjectCustomersEl.innerHTML = '';
+
+              snapshot.forEach(snapshotItem => {
+
+                let key = snapshotItem.key;
+                let data = snapshotItem.val();
+
+                if (key !== '') {
+
+                  this.listProjectCustomersEl.appendChild(this.getProjectCustomerView(data, key));
+
+                }
+
+              });
+
+              if (this.listProjectCustomersEl.childElementCount === 0) {
+        
+                this.addNewProject();
+        
+              }
+
+              this.readConsultCustomerById(this.customerKey);
+              this.projectTitleEl.innerHTML = this.customerName + ' > Projetos';
+
+            });
             break;
 
           case 'btn-add-solution':
-            let newSolution = prompt('Nome da nova solução:');
+            this.projectKey = lastLiKey;
 
-            if (newSolution) {
+            this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/solutions';
 
-              this.solutionKey = li.dataset.key;
+            $('#modal-list-projects').modal('hide');
 
-              refCustomer = 'ssa/customers/' + this.projectKey + '/projects/' + this.solutionKey;
+            $('#modal-list-solutions').modal('show');
 
-              firebase.database().ref(refCustomer).push().set({
-                solutionName: newSolution
+            firebase.database().ref(this.refProjectCustomer).on('value', snapshot => {
+
+              this.listSolutionsProjectsCustomersEl.innerHTML = '';
+
+              snapshot.forEach(snapshotItem => {
+
+                let key = snapshotItem.key;
+                let data = snapshotItem.val();
+
+                if (key !== '') {
+
+                  this.listSolutionsProjectsCustomersEl.appendChild(this.getSolutionProjectCustomerView(data, key));
+                  
+                } 
+
               });
 
-            }
+              if (this.listSolutionsProjectsCustomersEl.childElementCount === 0) {
+        
+                this.addNewSolution();
+        
+              }
+
+              this.readConsultCustomerById(this.customerKey);
+              this.readConsultProjectCustomerById(this.projectKey);
+              this.solutionTitleEl.innerHTML = this.customerName + ' > ' + this.projectName + ' > Soluções';
+
+            });
             break;
 
           default:
@@ -247,31 +539,6 @@ class ZController {
         }
 
       }
-
-      key = li.dataset.key;
-
-      refCustomer = 'ssa/customers/' + key + '/projects';
-
-      firebase.database().ref(refCustomer).on('value', snapshot => {
-
-        this.listProjectCustomersEl.innerHTML = '';
-
-        snapshot.forEach(snapshotItem => {
-
-          let key = snapshotItem.key;
-          let data = snapshotItem.val();
-
-          console.log('Dados: ', data.projectName);
-
-          if (data) {
-
-            this.listProjectCustomersEl.appendChild(this.getProjectCustomerView(data, key));
-
-          }
-
-        });
-
-      });
 
     });
 
