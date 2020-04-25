@@ -38,6 +38,9 @@ class ZController {
     // Modal Button to open form to create a new Product
     this.btnNewProductEl = document.querySelector('#btn-new-product');
 
+
+    this.btnBackSolutionListEl = document.querySelector('#btn-back-solution-list');
+
     // Modal Title Project
     this.projectTitleEl = document.querySelector('#project-title');
 
@@ -411,19 +414,28 @@ class ZController {
 
     if (product && quantity) {
 
-        firebase.database().ref('basket/').push().set({
-          timestampNow,
-          product,
-          quantity
+      this.solutionKey = lastLiKey;
+
+      this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/product/';
+
+    console.log(refSolutionProposalProjectCustomer);
+
+      // firebase.database().ref(this.refSolutionProposalProjectCustomer).push().set({
+      //   productName: newProduct
+      // });
+
+        // firebase.database().ref('basket/').push().set({
+        //   timestampNow,
+        //   product,
+        //   quantity
           
-        });  
+        // });  
         
         this.inputQuantityEl.innerHTML = '';
 
     }
 
-    
-    this.getProductSolutionProposalProjectCustomerView();
+    // TODO método do conteudo do SWITCH 
 
     // if (newProduct) {
 
