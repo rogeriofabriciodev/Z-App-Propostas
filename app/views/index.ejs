@@ -104,7 +104,6 @@
                   </form>
                 </div>
 
-
                 <table id="table-projects-th" class="table table-sm mt-5">
                   <thead>
                     <tr>
@@ -337,7 +336,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="h5 mb-4 text-gray-800" id="project-title"></h5>
+          <h6 class="h6 mb-4 text-gray-800" id="project-title"></h6>
           <button type="button" class="btn-modal-close-project" data-dismiss="modalList">
             <span>&times;</span>
           </button>
@@ -367,28 +366,49 @@
     </div>
   </div>
 
+  <!--Modal List Proposal-->
+  <div class="modal fade bd-example-modal-lg" id="modal-list-proposal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h6 class="h6 mb-4 text-gray-800" id="proposal-title"></h6>
+          <button type="button" class="btn-modal-close-proposal" data-dismiss="modalListProposal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <ul id="list-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+
+          </ul>
+          <!-- Fim da List -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="btn-new-proposal" data-dismiss="modalNewProposal">
+            Adicionar Proposta
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   <!--Modal List Solution-->
   <div class="modal fade bd-example-modal-lg" id="modal-list-solutions" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h5 class="h5 mb-4 text-gray-800" id="solution-title"></h5>
+          <h6 class="h6 mb-4 text-gray-800" id="solution-title"></h6>
           <button type="button" class="btn-modal-close-solution" data-dismiss="modalListSolution">
             <span>&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <!-- Inicio da List -->
-          <!-- <table id="table-projects-th" class="table table-sm mt-5">
-            <thead>
-              <tr>
-                <th scope="col" id="table-title" class="text-center"></th>
-              </tr>
-            </thead>
-          </table> -->
-          <ul id="list-solutions-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+          <ul id="list-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
 
           </ul>
           <!-- Fim da List -->
@@ -402,6 +422,90 @@
       </div>
     </div>
   </div>
+
+  <!--Modal List Product-->
+  <div class="modal fade bd-example-modal-lg" id="modal-list-products" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h6 class="h6 mb-4 text-gray-800" id="product-title"></h6>
+          <button type="button" class="btn-modal-close-product" data-dismiss="modalListProduct">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <ul id="list-products-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+
+          </ul>
+          <!-- Fim da List -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
+            Adicionar Item
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal Add Product-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-product" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h6 class="h6 mb-4 text-gray-800" id="product-title"></h6>
+          <button type="button" class="btn-modal-close-product" data-dismiss="modalAddProduct">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form id="form-add-products">
+
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="formControlSelectCategoria">Categoria</label>
+                <select class="form-control" id="formControlSelectCategoria">
+          
+                </select>
+              </div>
+          
+          
+              <div class="form-group col-6">
+                <label for="formControlSelectProdutosPorCategoria">Equipamentos</label>
+                <select class="form-control" id="formControlSelectProdutosPorCategoria">
+                  
+                </select>
+              </div>
+            </div>
+        
+            <div class="form-group col-6">
+              <label for="inputQuantity">Quantidade</label>
+              <input type="number" class="form-control" id="inputQuantity">
+            </div>
+        
+            <button id="btn-add-product" type="button" class="btn btn-primary mt-2 justify-content-center">Adicionar</button>
+        
+          </form>
+          <!-- Fim do form -->
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
+            Adicionar Item
+          </button> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
