@@ -204,11 +204,13 @@ class ZController {
     this.btnAddProductEl.addEventListener('click', e => {
 
       let timestampNow = Date.now();
+      
+      let price = this.selectProduct.options[this.selectProduct.selectedIndex].dataset.price;
 
       this.productNameSelected = this.selectProduct.options[this.selectProduct.selectedIndex].value;
       let quantityProduct = this.inputQuantityEl.value;
       
-      this.addNewProduct(quantityProduct);
+      this.addNewProduct(quantityProduct, price);
 
     });
 
@@ -410,7 +412,7 @@ class ZController {
   }
 
 
-  addNewProduct(quantityProduct) {
+  addNewProduct(quantityProduct, price) {
 
     // $('#modal-list-products').modal('hide');
   
@@ -419,10 +421,10 @@ class ZController {
     let timestampNow = Date.now();
     let product = this.productNameSelected;
     let quantity = quantityProduct;
-    let salePrice = 1;
-    console.log('salePrice', salePrice);
+    let salePrice = price;
+    console.log('salePrice: ', salePrice);
 
-    if (product && quantity) {
+    if (product && quantity && salePrice) {
 
       this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/cart/';
 
@@ -867,7 +869,7 @@ class ZController {
             firebase.database().ref(this.refSolutionProposalProjectCustomer).on('value', snapshot => {
 
               this.listProductsSolutionsProposalProjectsCustomersEl.innerHTML = '';
-              arrayPrice = [];
+              arrayPrice = [0];
               total = 0;
 
               snapshot.forEach(snapshotItem => {
@@ -980,10 +982,11 @@ class ZController {
     let option = document.createElement('option');
 
     option.dataset.key = key;
-    option.dataset.file = data
+    option.dataset.file = data;
+    option.dataset.price = data.precoVenda;
     
     option.innerHTML = `
-      <option value='${key}' dataset-file='${data}'>${data.nomeFantasia}</option>
+      <option value='${key}' dataset-file='${data}' dataset-price='${data.precoVenda}'>${data.nomeFantasia}</option>
     `;
 
     return option;
