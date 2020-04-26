@@ -2,6 +2,8 @@ class ZController {
 
   constructor() {
 
+    this.subtotalEl = document.querySelector('#subtotal');
+
     // Select with product categories
     this.formControlSelectCategoriaEl = document.querySelector('#formControlSelectCategoria');
 
@@ -143,6 +145,8 @@ class ZController {
     // Path to save Proposal into Project
     this.refProjectCustomer = '';
 
+    this.itemKey = '';
+
 
     // Path to save Solution into Proposal
     this.refProposalProjectCustomer = '';
@@ -203,7 +207,7 @@ class ZController {
 
       this.productNameSelected = this.selectProduct.options[this.selectProduct.selectedIndex].value;
       let quantityProduct = this.inputQuantityEl.value;
-
+      
       this.addNewProduct(quantityProduct);
 
     });
@@ -239,7 +243,11 @@ class ZController {
 
     this.btnNewProductEl.addEventListener('click', e => {
 
-      this.addNewProduct();
+      // this.addNewProduct();
+
+      $('#modal-list-products').modal('hide');
+  
+      $('#modal-list-solutions').modal('show');
 
     });
 
@@ -404,50 +412,30 @@ class ZController {
 
   addNewProduct(quantityProduct) {
 
-    $('#modal-list-products').modal('hide');
+    // $('#modal-list-products').modal('hide');
   
-    $('#modal-add-product').modal('show');
+    // $('#modal-add-product').modal('show');
 
     let timestampNow = Date.now();
     let product = this.productNameSelected;
     let quantity = quantityProduct;
+    let salePrice = 1;
+    console.log('salePrice', salePrice);
 
     if (product && quantity) {
 
-      this.solutionKey = lastLiKey;
+      this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/cart/';
 
-      this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/product/';
-
-    console.log(refSolutionProposalProjectCustomer);
-
-      // firebase.database().ref(this.refSolutionProposalProjectCustomer).push().set({
-      //   productName: newProduct
-      // });
-
-        // firebase.database().ref('basket/').push().set({
-        //   timestampNow,
-        //   product,
-        //   quantity
-          
-        // });  
+      firebase.database().ref(this.refSolutionProposalProjectCustomer).push().set({
+        timestampNow,
+          product,
+          quantity,
+          salePrice
+      });
         
-        this.inputQuantityEl.innerHTML = '';
+        //this.inputQuantityEl.innerHTML = '';
 
     }
-
-    // TODO método do conteudo do SWITCH 
-
-    // if (newProduct) {
-
-    //   // this.projectKey = li.dataset.key;
-
-    //   //this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey;
-
-    //   firebase.database().ref(this.refSolutionProposalProjectCustomer).push().set({
-    //     productName: newProduct
-    //   });
-
-    // }
 
   }
   
@@ -717,8 +705,8 @@ class ZController {
     li.dataset.file = JSON.stringify(data);
 
     li.innerHTML = `
-      <div class="list-group-item d-flex justify-content-between align-items-center"><span>${data.productName}</span><span>${data.quantity}</span>
-      </div>
+      <div class="list-group-item d-flex justify-content-between align-items-center"><span class="col-8">${data.product}</span><span class="col-2 text-center">${data.quantity}</span>
+      <span class="col-2 text-center"><button type="button" class="btn" id="btn-remove-product"><img src="src/img/icons/trash-outline.svg" alt="add" width="18px"/></button></span></div>
     `;
 
     this.initEventsLi(li);
@@ -863,9 +851,14 @@ class ZController {
             break;
         
           case 'btn-add-product':
+
+            let arrayPrice;
+            let total;
+            this.subtotalEl.innerHTML = '';
+
             this.solutionKey = lastLiKey;
 
-            this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/product/';
+            this.refSolutionProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey + '/cart/';
 
             $('#modal-list-solutions').modal('hide');
 
@@ -874,6 +867,8 @@ class ZController {
             firebase.database().ref(this.refSolutionProposalProjectCustomer).on('value', snapshot => {
 
               this.listProductsSolutionsProposalProjectsCustomersEl.innerHTML = '';
+              arrayPrice = [];
+              total = 0;
 
               snapshot.forEach(snapshotItem => {
 
@@ -886,21 +881,36 @@ class ZController {
                   
                 } 
 
+                let item = (data.salePrice * parseFloat(data.quantity));
+                arrayPrice.push(item);
+                console.log(item);
               });
 
-              if (this.listProductsSolutionsProposalProjectsCustomersEl.childElementCount === 0) {
+              total = arrayPrice.reduce((total, currentElement) => total + currentElement);
+
+              console.log(total);
+              
+              this.subtotalEl.innerHTML = total;
+
+              // if (this.listProductsSolutionsProposalProjectsCustomersEl.childElementCount === 0) {
         
-                this.addNewProduct();
+              //   this.addNewProduct();
         
-              }
+              // }
 
               this.readConsultCustomerById(this.customerKey);
               this.readConsultProjectCustomerById(this.projectKey);
               this.readConsultProposalProjectCustomerById(this.proposalKey);
               this.readConsultSolutionProposalProjectCustomerById(this.solutionKey);
-              this.productTitleEl.innerHTML = this.customerName + ' > ' + this.projectName +  ' > ' + this.proposalName + '>' + this.solutionName + ' > Produtos';
+              this.productTitleEl.innerHTML = this.customerName + ' > ' + this.projectName +  ' > ' + this.proposalName + ' > ' + this.solutionName + ' > Equipamentos';
 
             });
+            break;
+          case 'btn-remove-product': 
+
+            this.itemKey = lastLiKey;
+            this.removeItem(this.itemKey);
+          
             break;
 
           default:
@@ -953,7 +963,6 @@ class ZController {
 
       const setUnico = new Set(this.arrayCategories);
       const deVoltaAAray = [...setUnico];
-      console.log(deVoltaAAray);
 
       deVoltaAAray.forEach(item => {
 
@@ -974,7 +983,7 @@ class ZController {
     option.dataset.file = data
     
     option.innerHTML = `
-      <option value='${key}'>${data.nomeFantasia}</option>
+      <option value='${key}' dataset-file='${data}'>${data.nomeFantasia}</option>
     `;
 
     return option;
@@ -1004,5 +1013,13 @@ class ZController {
     });
 
   }  
+
+
+  removeItem(key) {
+
+    let ref = this.refSolutionProposalProjectCustomer + key;
+    firebase.database().ref(ref).remove();
+    
+  }
   
 }
