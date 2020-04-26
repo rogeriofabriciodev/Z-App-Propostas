@@ -425,7 +425,7 @@
 
   <!--Modal List Product-->
   <div class="modal fade bd-example-modal-lg" id="modal-list-products" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
@@ -466,68 +466,26 @@
           </form>
           <!-- Fim do form -->
           <hr></hr>
-          <ul id="list-products-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
-
-          </ul>
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center"><span class="col-8">Descrição</span><span class="col-2 text-center">Quant.</span>
+              <span class="col-2 text-center">Remover</span>
+            </div>
+            <hr></hr>
+            <ul id="list-products-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+              
+            </ul>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="col-8"></span>
+              <span class="col-2 text-center">Sub-Total</span>
+              <span id="subtotal" class="col-2 text-center"></span>
+            </div>
+          </div>
           <!-- Fim da List -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
-            Voltar
+            Soluções
           </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <!--Modal Add Product-->
-  <div class="modal fade bd-example-modal-lg" id="modal-add-product" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h6 class="h6 mb-4 text-gray-800" id="product-title"></h6>
-          <button type="button" class="btn-modal-close-product" data-dismiss="modalAddProduct">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <!-- <form id="form-add-products">
-
-            <div class="form-row">
-              <div class="form-group col-6">
-                <label for="formControlSelectCategoria">Categoria</label>
-                <select class="form-control" id="formControlSelectCategoria">
-          
-                </select>
-              </div>
-          
-          
-              <div class="form-group col-6">
-                <label for="formControlSelectProdutosPorCategoria">Equipamentos</label>
-                <select class="form-control" id="formControlSelectProdutosPorCategoria">
-                  
-                </select>
-              </div>
-            </div>
-        
-            <div class="form-group col-6">
-              <label for="inputQuantity">Quantidade</label>
-              <input type="number" class="form-control" id="inputQuantity">
-            </div>
-        
-            <button id="btn-add-product" type="button" class="btn btn-primary mt-2 justify-content-center">Adicionar</button>
-        
-          </form> -->
-          <!-- Fim do form -->
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
-            Adicionar Item
-          </button> -->
         </div>
 
       </div>
