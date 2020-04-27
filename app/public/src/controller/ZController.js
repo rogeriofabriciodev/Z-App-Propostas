@@ -2,6 +2,8 @@ class ZController {
 
   constructor() {
 
+    this.btnConsolidateProposalEl = document.querySelector('#btn-cconsolidate-proposal');
+
     this.subtotalEl = document.querySelector('#subtotal');
 
     // Select with product categories
@@ -147,6 +149,8 @@ class ZController {
 
     this.itemKey = '';
 
+    this.subtotal = '';
+
 
     // Path to save Solution into Proposal
     this.refProposalProjectCustomer = '';
@@ -200,6 +204,26 @@ class ZController {
 
 
   initEvents() {
+
+    this.btnConsolidateProposalEl.addEventListener('click', e => {
+
+      // console.log(this.customerKey);
+      // console.log(this.proposalKey);
+
+      let ref = 'ssa/customers/' + this.customerKey + '/projects/proposal/' + this.proposalKey + '/solutoins/cart/';
+      // console.log(ref);
+
+      if (confirm("Deseja consolidar a Proposta?")) {
+
+        let name = this.proposalName;
+        console.log(name);
+        this.arraySubtotalSolutions();
+        console.log('ok');
+      } else {
+        console.log('não');
+      }
+
+    });
 
     this.btnAddProductEl.addEventListener('click', e => {
 
@@ -359,6 +383,32 @@ class ZController {
   }
 
 
+  arraySubtotalSolutions() {
+    let total = [0];
+
+    let ref = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/';
+
+    console.log(ref);
+    firebase.database().ref(ref).on('value', snapshot => {
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        total.push(data.subtotal);
+        let ttl = total.reduce((total, currentElement) => total + currentElement);
+        console.log(total);
+        console.log(ttl);
+      });
+
+      // this.proposalName = snapshot.val().proposalName;
+
+    });
+    
+  }
+
+
   addNewProject() {
 
     let newProject = prompt('Nome do novo projeto:');
@@ -401,7 +451,9 @@ class ZController {
 
       // this.projectKey = li.dataset.key;
 
-      //this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey;
+      this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey;
+      console.log(this.proposalKey);
+      console.log(this.refProposalProjectCustomer);
 
       firebase.database().ref(this.refProposalProjectCustomer).push().set({
         solutionName: newSolution
@@ -422,7 +474,6 @@ class ZController {
     let product = this.productNameSelected;
     let quantity = quantityProduct;
     let salePrice = price;
-    console.log('salePrice: ', salePrice);
 
     if (product && quantity && salePrice) {
 
@@ -434,7 +485,17 @@ class ZController {
           quantity,
           salePrice
       });
-        
+
+      let subtotal = this.subtotal;
+
+      this.refProposalProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal/' + this.proposalKey + '/solutions/' + this.solutionKey;
+      console.log(this.refProposalProjectCustomer);
+      firebase.database().ref(this.refProposalProjectCustomer).update({
+        subtotal
+      });
+
+
+
         //this.inputQuantityEl.innerHTML = '';
 
     }
@@ -855,7 +916,7 @@ class ZController {
           case 'btn-add-product':
 
             let arrayPrice;
-            let total;
+
             this.subtotalEl.innerHTML = '';
 
             this.solutionKey = lastLiKey;
@@ -870,7 +931,7 @@ class ZController {
 
               this.listProductsSolutionsProposalProjectsCustomersEl.innerHTML = '';
               arrayPrice = [0];
-              total = 0;
+              this.subtotal = 0;
 
               snapshot.forEach(snapshotItem => {
 
@@ -885,14 +946,11 @@ class ZController {
 
                 let item = (data.salePrice * parseFloat(data.quantity));
                 arrayPrice.push(item);
-                console.log(item);
               });
 
-              total = arrayPrice.reduce((total, currentElement) => total + currentElement);
-
-              console.log(total);
+              this.subtotal = arrayPrice.reduce((total, currentElement) => total + currentElement);
               
-              this.subtotalEl.innerHTML = total;
+              this.subtotalEl.innerHTML = this.subtotal;
 
               // if (this.listProductsSolutionsProposalProjectsCustomersEl.childElementCount === 0) {
         
