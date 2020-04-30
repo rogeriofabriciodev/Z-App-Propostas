@@ -400,6 +400,11 @@ class ZController {
         let ttl = total.reduce((total, currentElement) => total + currentElement);
         console.log(total);
         console.log(ttl);
+
+        //  TODO Apensenter o total na consolidação da proposta
+
+
+        
       });
 
       // this.proposalName = snapshot.val().proposalName;
