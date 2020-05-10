@@ -40,7 +40,7 @@
                   <span class="ue-effect-container uee-FeatureNav-myFiles" data-reactid="27">
                     <a href="#" class="maestro-nav__feature maestro-nav__active-feature" data-reactid="28"
                       data-toggle="modal" data-target="#modal-add-customers">
-                      Cadastrar Cliente
+                      Clientes
                     </a>
                   </span>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="maestro-nav__feature-wrap" data-reactid="31">
                   <span class="ue-effect-container uee-FeatureNav-sharing" data-reactid="32">
                     <a href="#" class="maestro-nav__feature" data-reactid="33">
-                      Compartilhamento
+                      Propostas
                     </a>
                   </span>
                 </div>
@@ -58,12 +58,12 @@
                 <div class="maestro-nav__feature-wrap" data-reactid="36">
                   <span class="ue-effect-container uee-FeatureNav-fileRequests" data-reactid="37">
                     <a href="#" class="maestro-nav__feature" data-reactid="38">
-                      Solicitações de arquivo
+                      Produtos
                     </a>
                   </span>
                 </div>
               </li>
-              <li data-reactid="40">
+              <!-- <li data-reactid="40">
                 <div class="maestro-nav__feature-wrap" data-reactid="41">
                   <span class="ue-effect-container uee-FeatureNav-deletedFiles" data-reactid="42">
                     <a href="#" class="maestro-nav__feature" data-reactid="43">
@@ -71,7 +71,7 @@
                     </a>
                   </span>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -85,22 +85,17 @@
 
         <section id="content-section">
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-xl-10">
 
               <!-- Begin Page Content -->
               <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <h1 class="h3 mb-4 text-gray-800">Consultar Cliente</h1>
-                <div>
-                  <form id="form-consult-customer">
-                    <div class="form-row">
-                      <div class="form-group col-12">
-                        <label for="consultName">Cliente</label>
-                        <input type="text" class="form-control" id="consult-name" placeholder="Nome do Cliente">
-                        <button id="btn-consult-customers" type="button" class="btn btn-primary mt-2">Procurar</button>
-                      </div>
-                    </div>
+                <div class="form-group">
+                  <form class="form-inline">
+                    <input type="text" class="form-control col-10" id="consult-name" placeholder="Nome do Cliente">
+                    <button id="btn-consult-customers" type="button" class="btn btn-primary ml-2">Procurar</button>
                   </form>
                 </div>
 
@@ -492,6 +487,36 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
             Soluções
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--Modal Consolidate Proposal-->
+  <div class="modal fade bd-example-modal-lg" id="modal-consolidate-proposal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h6 class="h6 mb-4 text-gray-800" id="consolidate-proposal-title"></h6>
+          <button type="button" class="btn-modal-close-consolidate-proposal" data-dismiss="modalConsolidateProposal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <ul id="consolidate-proposal" class="list-group list-group-flush" style="list-style-type: none;">
+            <h5></h5>
+
+          </ul>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
+            <!-- Soluções -->
           </button>
         </div>
 

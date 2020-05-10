@@ -219,6 +219,11 @@ class ZController {
         console.log(name);
         this.arraySubtotalSolutions();
         console.log('ok');
+
+        $('#modal-list-solutions').modal('hide');
+
+        $('#modal-consolidate-proposal').modal('show');
+
       } else {
         console.log('não');
       }
@@ -1052,6 +1057,7 @@ class ZController {
       <option value='${key}' dataset-file='${data}' dataset-price='${data.precoVenda}'>${data.nomeFantasia}</option>
     `;
 
+    // TODO usar o nickname na consolidação da proposta. console.log(data.nickname);
     return option;
 
   }
