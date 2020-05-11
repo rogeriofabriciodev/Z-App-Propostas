@@ -8,14 +8,8 @@ router.get('/', function(req, res, next) {
 
 
 /* GET Customers Add. */
-router.get('/customersadd', function(req, res, next) {
-  res.render('customersAdd', { title: 'Express' });
-});
-
-
-/* GET Customers List. */
-router.get('/customerslist', function(req, res, next) {
-  res.render('customersList', { title: 'Express' });
+router.get('/modelo', function(req, res, next) {
+  res.render('modelo', { title: 'Express' });
 });
 
 module.exports = router;
