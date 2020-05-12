@@ -69,10 +69,10 @@
           <table class="table table-hover col-11 mt-5">
             <thead>
               <tr>
-                <th scope="col" class="text-center">Nome</th>
-                <th scope="col" class="text-center">E-mail</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
                 <th scope="col" class="text-center">Celular</th>
-                <th scope="col" class="text-center">Cidade</th>
+                <th scope="col">Cidade</th>
               </tr>
             </thead>
             <tbody>
@@ -127,8 +127,8 @@
           <table class="table table-hover col-11 mt-5">
             <thead>
               <tr>
-                <th scope="col" class="text-center">Cliente</th>
-                <th scope="col" class="text-center">Projeto</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Projeto</th>
                 <th scope="col" class="text-center">Criado em</th>
                 <th scope="col" class="text-center">Total</th>
               </tr>
@@ -213,6 +213,266 @@
     </div>
     <!-- Products Panel End-->
 
+  </div>
+
+  <!--Modal Form Customer-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-customers" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="h3 mb-4 text-gray-800">Cadastro do Cliente</h1>
+          <button type="button" class="btn-close-modal-add" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Inicio do FORM -->
+
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-customer">
+                      <div class="form-row">
+                        <div class="form-group col-md-8">
+                          <label for="inputName">Nome Completo</label>
+                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputCpf">CPF</label>
+                          <input type="text" class="form-control" id="inputCpf" placeholder="Apenas Números">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputCelular">Celular</label>
+                          <input type="text" class="form-control" id="inputCelular" placeholder="Apenas número com DDD">
+                        </div>
+                        <div class="form-group col-md-8">
+                          <label for="inputEmail">Email</label>
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress">Endereço</label>
+                        <input type="text" class="form-control" id="inputAddress"
+                          placeholder="Logradouro / Número / Bairro">
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress2">Complemento</label>
+                        <input type="text" class="form-control" id="inputAddress2"
+                          placeholder="Edifício / Apartamento / etc">
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputCity">Cidade</label>
+                          <input type="text" class="form-control" id="inputCity" placeholder="Nome da cidade">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Estado</label>
+                          <select id="inputState" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option>BA</option>
+                            <option>PE</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="inputZip">CEP</label>
+                          <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button id="btn-save-customer" type="button" class="btn btn-success mt-2">Salvar Cliente</button>
+                    </form>
+                  </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+              </div>
+              <!-- End of Main Content -->
+
+            </div>
+          </section>
+
+          <!-- Fim do FORM -->
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-success" data-dismiss="modal">
+            Salvar
+          </button> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--Modal Form Proposal-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-proposal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="h3 mb-4 text-gray-800">Cadastrar Proposta</h1>
+          <button type="button" class="btn-close-modal-add" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Inicio do FORM -->
+
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-proposal">
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputName">Proposta</label>
+                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        </div>
+                        <div class="form-group col-4">
+                          <label for="formControlSelectCliente">Cliente</label>
+                          <select class="form-control" id="formControlSelectCliente">
+                            
+                          </select>
+                        </div>
+                        <div class="form-group col-3">
+                          <button id="btn-save-proposal" type="button" class="btn btn-success mt-4">Salvar Proposta</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+              </div>
+              <!-- End of Main Content -->
+
+            </div>
+          </section>
+
+          <!-- Fim do FORM -->
+        </div>
+        <div class="modal-footer">
+          <span class="col-12 text-center text-danger">Campo cliente é obrigatório.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--Modal Form Product-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-customers" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="h3 mb-4 text-gray-800">Cadastro do Cliente</h1>
+          <button type="button" class="btn-close-modal-add" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Inicio do FORM -->
+
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-customer">
+                      <div class="form-row">
+                        <div class="form-group col-md-8">
+                          <label for="inputName">Nome Completo</label>
+                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputCpf">CPF</label>
+                          <input type="text" class="form-control" id="inputCpf" placeholder="Apenas Números">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputCelular">Celular</label>
+                          <input type="text" class="form-control" id="inputCelular" placeholder="Apenas número com DDD">
+                        </div>
+                        <div class="form-group col-md-8">
+                          <label for="inputEmail">Email</label>
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress">Endereço</label>
+                        <input type="text" class="form-control" id="inputAddress"
+                          placeholder="Logradouro / Número / Bairro">
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress2">Complemento</label>
+                        <input type="text" class="form-control" id="inputAddress2"
+                          placeholder="Edifício / Apartamento / etc">
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputCity">Cidade</label>
+                          <input type="text" class="form-control" id="inputCity" placeholder="Nome da cidade">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Estado</label>
+                          <select id="inputState" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option>BA</option>
+                            <option>PE</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="inputZip">CEP</label>
+                          <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button id="btn-save-customer" type="button" class="btn btn-success mt-2">Salvar Cliente</button>
+                    </form>
+                  </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+              </div>
+              <!-- End of Main Content -->
+
+            </div>
+          </section>
+
+          <!-- Fim do FORM -->
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-success" data-dismiss="modal">
+            Salvar
+          </button> -->
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
