@@ -18,206 +18,201 @@
 </head>
 
 <body>
-
-  <div class="container-fluid">
-    <div class="row">
-
-      <nav class="col-md-2 d-none d-md-block sidebar">
-
-        <div id="logo-dropbox">
-          <img src="/src/img/logo.jpeg" alt="Logo" />
-        </div>
-
-        <div class="sidebar-sticky">
-          <div class="maestro-nav__contents">
-            <ul class="maestro-nav__features" data-reactid="21">
-              <li data-reactid="22">
-                <h2 class="maestro-nav__features-header" data-reactid="23">
-                  <a href="#" class="maestro-nav__features-header-link" data-reactid="24">Propostas</a>
-                </h2>
-              </li>
-              <li data-reactid="25">
-                <div class="maestro-nav__feature-wrap" data-reactid="26">
-                  <span class="ue-effect-container uee-FeatureNav-myFiles" data-reactid="27">
-                    <a href="#" class="maestro-nav__feature maestro-nav__active-feature" data-reactid="28"
-                      data-toggle="modal" data-target="#modal-add-customers">
-                      Clientes
-                    </a>
-                  </span>
-                </div>
-              </li>
-              <li data-reactid="30">
-                <div class="maestro-nav__feature-wrap" data-reactid="31">
-                  <span class="ue-effect-container uee-FeatureNav-sharing" data-reactid="32">
-                    <a href="#" class="maestro-nav__feature" data-reactid="33">
-                      Propostas
-                    </a>
-                  </span>
-                </div>
-              </li>
-              <li data-reactid="35">
-                <div class="maestro-nav__feature-wrap" data-reactid="36">
-                  <span class="ue-effect-container uee-FeatureNav-fileRequests" data-reactid="37">
-                    <a href="#" class="maestro-nav__feature" data-reactid="38">
-                      Produtos
-                    </a>
-                  </span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
-      </nav>
-
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-        <section id="content-section">
-          <div class="row">
-            <div class="col-12">
-
-              <!-- Begin Page Content -->
-              <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Cliente</h1>
-                <div>
-                  <form id="form-consult-customer">
-                    <div class="form-row">
-                      <div class="form-inline col-12">
-                        <input type="text" class="form-control col-10" id="consult-name" placeholder="Nome do Cliente" />
-                        <button id="btn-consult-customers" type="button" class="btn btn-primary ml-4 col-1">Procurar</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-
-                <table id="table-projects-th" class="table table-sm mt-5">
-                  <thead>
-                    <tr>
-                      <th scope="col" id="table-title" class="text-center"></th>
-                    </tr>
-                  </thead>
-                </table>
-                <ul id="list-customers" class="list-group list-group-flush" style="list-style-type: none;">
-
-                </ul>
-
-
-                <!-- <div>
-                  <form>
-                    <fieldset>
-                      <div class="form-group">
-                        <label for="disabledTextInput">Busca de Produtos</label>
-                        <input type="text" id="disabledTextInput" class="form-control" value="Receiver"
-                          placeholder="Ex. Receiver">
-                      </div>
-                      <button type="submit" class="btn btn-primary">Procurar</button>
-
-                      <div class="form-group mb-5 mt-5 pb-5">
-                        <label for="exampleFormControlSelect1">Opções Encontradas</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>Onkyo NR-TX656 7.1</option>
-                          <option>Onkyo NR-TX777 9.2</option>
-                          <option>NAD 7.1 T748</option>
-                          <option>Integra DRX-2.3</option>
-                          <option>Integra DRX-3.3</option>
-                        </select>
-                      </div>
-                    </fieldset>
-                  </form>
-                  <table class="table table-sm mt-5">
-
-                    <h3>Lista de Produtos</h3>
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Fantasia</th>
-                        <th scope="col" class="text-center">Categoria</th>
-                        <th scope="col" class="text-center">Quant.</th>
-                        <th scope="col" class="text-center"></th>
-                        <th scope="col" class="text-center">Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Receiver 7.2</td>
-                        <td class="text-center">Audio</td>
-                        <td class="d-flex justify-content-center"><input class="form-control text-center"
-                            style="min-width: 70px; max-width: 80px;" type="number" name="quant" id="inputQt" value="1">
-                        </td>
-                        <td class="text-center"><input type="checkbox" placeholder="escreva a obs"> Cliente</td>
-                        <td class="text-center"><button class="btn btn-sm text-light"><img src="src/img/icons/trash-outline.svg" width="18px"/></button></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Speaker inCeiling Focal LCR</td>
-                        <td class="text-center">Audio</td>
-                        <td class="d-flex justify-content-center"><input class="form-control text-center"
-                            style="min-width: 70px; max-width: 80px;" type="number" name="quant" id="inputQt" value="1">
-                        </td>
-                        <td class="text-center"><input type="checkbox" placeholder="escreva a obs"> Cliente</td>
-                        <td class="text-center"><button class="btn btn-sm text-light"><img src="src/img/icons/trash-outline.svg" width="18px"/></button></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Speaker inCelling Focal Surround</td>
-                        <td class="text-center">Audio</td>
-                        <td class="d-flex justify-content-center"><input class="form-control text-center"
-                            style="min-width: 70px; max-width: 80px;" type="number" name="quant" id="inputQt" value="1">
-                        </td>
-                        <td class="text-center"><input type="checkbox" placeholder="escreva a obs"> Cliente</td>
-                        <td class="text-center"><button class="btn btn-sm text-light"><img src="src/img/icons/trash-outline.svg" width="18px"/></button></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <textarea class="form-control" name="" id="" cols="30" rows="5"
-                    placeholder="Gourmet 4.0 zona 2 do Integra" value="Gourmet 4.0 zona 2 do Integra"></textarea>
-                  <div class="row">
-                    <div class="col-12 text-center">
-                      <button type="submit" class="btn btn-success mt-5">Concluir</button>
-                    </div>
-                  </div>
-
-                </div> -->
-
-              </div>
-              <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-          </div>
-    </div>
-    </section>
-
-    </main>
-  </div>
-  </div>
-
-  <div id="react-snackbar-root" style="display:none">
-    <div data-reactroot="" class="mc-snackbar-holder-backdrop">
-      <div class="mc-snackbar">
-        <div class="mc-snackbar-container mc-snackbar-container--snackbar-icon">
-          <div class="mc-snackbar-icon">
-            <svg width="32" height="32" viewBox="0 0 32 32"
-              class="mc-icon-template-status mc-icon-template-status-rotating">
-              <title>Status: Syncing</title>
-              <path
-                d="M16 24a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm0-3a5 5 0 0 0 3.467-8.602l-.57.844A4 4 0 0 1 16 20l.001-1.5-2.5 2 2.5 2V21zm0-10a5 5 0 0 0-3.667 8.399l.578-.858A4 4 0 0 1 16 12v1.5l2.5-2-2.5-2V11z"
-                fill="#0070E0" fill-rule="nonzero"></path>
-            </svg>
-          </div>
-          <p class="mc-snackbar-title">Enviando o arquivo <span class="filename">file.pdf</span> - <span
-              class="timeleft">8 min</span> restantes</p>
-        </div>
-        <div class="mc-progress-bar-bg">
-          <div class="mc-progress-bar-fg" style="width: 0%;"></div>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm rounded">
+    <h1 class="ml-5 text-light">.Z</h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
+      <div class="row">
+        <div class="col-8 mx-5">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Cliente <span class="sr-only">(página atual)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Propostas <span class="sr-only">(página atual)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Produtos <span class="sr-only">(página atual)</span></a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
+  </nav>
+
+  <div class="container bg-light" style="min-height: 750px;">
+
+    <!-- Customers Panel -->
+    <div id="customers-panel">
+      <div class="row">
+        <div class="col-12" style="margin-top: 80px;">
+          <h1><img src="src/img/icons/person-outline.svg" alt="" width="32px" class="pb-2"/> Clientes</h1>
+
+          <!-- Form Seach Customer -->
+          <form class="mt-4">
+            <div class="form-row align-items-center">
+              <div class="col-10">
+                <label class="sr-only" for="customer-name">Cliente</label>
+                <input type="text" class="form-control mb-2" id="customer-name" placeholder="Cliente">
+              </div>
+              <div class="col-auto">
+                <button type="submit"  id="btn-seach-customer" class="btn btn-primary mb-2">Buscar</button>
+              </div>
+            </div>
+          </form>
+          <!-- Form Seach Customer End -->
+
+          <!-- Table Customers -->
+          <table class="table table-hover col-11 mt-5">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col" class="text-center">Celular</th>
+                <th scope="col">Cidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Marcos Padua</td>
+                <td>marcos.padua@exemplo.com</td>
+                <td class="text-center">71 99999 0000</td>
+                <td>Salvador</td>
+              </tr>
+              <tr>
+                <td>Ricardo Perrone</td>
+                <td>ricardo.perrone@exemplo.com</td>
+                <td class="text-center">71 99999 1111</td>
+                <td>Vitória da Conquista</td>
+              </tr>
+              <tr>
+                <td>Francisco Nogueira</td>
+                <td>francisco.nogueira@exemplo.com</td>
+                <td class="text-center">71 99999 2222</td>
+                <td>Recife</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Table Customers End -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Customers Panel End -->
+
+    <!-- Proposals Panel -->
+    <div id="proposals-panel">
+      <div class="row">
+        <div class="col-12" style="margin-top: 80px;">
+          <h1><img src="src/img/icons/reader-outline.svg" alt="" width="32px" class="pb-2"/> Propostas</h1>
+
+          <!-- Form Seach Proposal -->
+          <form class="mt-4">
+            <div class="form-row align-items-center">
+              <div class="col-10">
+                <label class="sr-only" for="Proposal-name">Proposta</label>
+                <input type="text" class="form-control mb-2" id="Proposal-name" placeholder="Proposta">
+              </div>
+              <div class="col-auto">
+                <button type="submit" id="btn-seach-proposal" class="btn btn-primary mb-2">Buscar</button>
+              </div>
+            </div>
+          </form>
+          <!-- Form Seach Proposal End -->
+
+          <!-- Table Proposals -->
+          <table class="table table-hover col-11 mt-5">
+            <thead>
+              <tr>
+                <th scope="col">Projeto</th>
+                <th scope="col">Cliente</th>
+                <th scope="col" class="text-center">Criado em</th>
+                <th scope="col" class="text-center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Praia do Forte</td>
+                <td>Marcos Padua</td>
+                <td class="text-center">03/04/2020</td>
+                <td class="text-right">R$ 120.000</td>
+              </tr>
+              <tr>
+                <td>Mansão Zafiro</td>
+                <td>Ricardo Perrone</td>
+                <td class="text-center">22/01/2020</td>
+                <td class="text-right">R$ 100.000</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Table Proposals End -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Proposals Panel End-->
+
+    <!-- Products Panel -->
+    <div id="products-panel">
+      <div class="row">
+        <div class="col-12" style="margin-top: 80px;">
+          <h1><img src="src/img/icons/cube-outline.svg" alt="" width="32px" class="pb-2"/> Produtos</h1>
+
+          <!-- Form Seach Product -->
+          <form class="mt-4">
+            <div class="form-row align-items-center">
+              <div class="col-10">
+                <label class="sr-only" for="product-name">Produto</label>
+                <input type="text" class="form-control mb-2" id="product-name" placeholder="Produto">
+              </div>
+              <div class="col-auto">
+                <button type="submit" id="btn-seach-product" class="btn btn-primary mb-2">Buscar</button>
+              </div>
+            </div>
+          </form>
+          <!-- Form Seach Product End -->
+
+          <!-- Table Proucts -->
+          <table class="table table-hover col-11 mt-5">
+            <thead>
+              <tr>
+                <th scope="col">Código Z</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Fabricante</th>
+                <th scope="col">Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">123456</th>
+                <td>Módulo Dimmer 8ch</td>
+                <td>Absolute</td>
+                <td>R$ 2.000</td>
+              </tr>
+              <tr>
+                <th scope="row">2123412</th>
+                <td>Receiver NR-TX777</td>
+                <td>Onkyo</td>
+                <td>R$ 8.000</td>
+              </tr>
+              <tr>
+                <th scope="row">3212342</th>
+                <td>Host S2000</td>
+                <td>Savant</td>
+                <td>R$ 4.900</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Table Products End -->
+
+        </div>
+      </div>
+    </div>
+    <!-- Products Panel End-->
+
   </div>
 
   <!--Modal Form Customer-->
@@ -288,13 +283,13 @@
                             <option>PE</option>
                           </select>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                           <label for="inputZip">CEP</label>
                           <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
                         </div>
                       </div>
                       <div class="form-group">
-                        <button id="btn-save-customer" type="button" class="btn btn-success mt-2">Salvar</button>
+                        <button id="btn-save-customer" type="button" class="btn btn-success mt-2">Salvar Cliente</button>
                     </form>
                   </div>
 
@@ -319,177 +314,166 @@
     </div>
   </div>
 
-  <!--Modal List Project-->
-  <div class="modal fade bd-example-modal-lg" id="modal-list-projects" tabindex="-1" role="dialog">
+  <!--Modal Form Proposal-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-proposal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h6 class="h6 mb-4 text-gray-800" id="project-title"></h6>
-          <button type="button" class="btn-modal-close-project" data-dismiss="modalList">
+          <h1 class="h3 mb-4 text-gray-800">Cadastrar Proposta</h1>
+          <button type="button" class="btn-close-modal-add" data-dismiss="modal">
             <span>&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <!-- Inicio da List -->
-          <!-- <table id="table-projects-th" class="table table-sm mt-5">
-            <thead>
-              <tr>
-                <th scope="col" id="table-title" class="text-center"></th>
-              </tr>
-            </thead>
-          </table> -->
-          <ul id="list-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+          <!-- Inicio do FORM -->
 
-          </ul>
-          <!-- Fim da List -->
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-proposal">
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputName">Proposta</label>
+                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        </div>
+                        <div class="form-group col-4">
+                          <label for="formControlSelectCliente">Cliente</label>
+                          <select class="form-control" id="formControlSelectCliente">
+                            
+                          </select>
+                        </div>
+                        <div class="form-group col-3">
+                          <button id="btn-save-proposal" type="button" class="btn btn-success mt-4">Salvar Proposta</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+              </div>
+              <!-- End of Main Content -->
+
+            </div>
+          </section>
+
+          <!-- Fim do FORM -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" id="btn-new-project" data-dismiss="modalNewProject">
-            Adicionar Projeto
-          </button>
+          <span class="col-12 text-center text-danger">Campo cliente é obrigatório.</span>
         </div>
 
       </div>
     </div>
   </div>
 
-  <!--Modal List Proposal-->
-  <div class="modal fade bd-example-modal-lg" id="modal-list-proposal" tabindex="-1" role="dialog">
+  <!--Modal Form Product-->
+  <div class="modal fade bd-example-modal-lg" id="modal-add-products" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h6 class="h6 mb-4 text-gray-800" id="proposal-title"></h6>
-          <button type="button" class="btn-modal-close-proposal" data-dismiss="modalListProposal">
+          <h1 class="h3 mb-4 text-gray-800">Cadastro de Produto</h1>
+          <button type="button" class="btn-close-modal-add" data-dismiss="modal">
             <span>&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <ul id="list-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
+          <!-- Inicio do FORM -->
 
-          </ul>
-          <!-- Fim da List -->
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-product">
+                      <div class="form-row">
+                        <div class="form-group col-md-8">
+                          <label for="inputName">Nome Completo</label>
+                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputCpf">CPF</label>
+                          <input type="text" class="form-control" id="inputCpf" placeholder="Apenas Números">
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="inputCelular">Celular</label>
+                          <input type="text" class="form-control" id="inputCelular" placeholder="Apenas número com DDD">
+                        </div>
+                        <div class="form-group col-md-8">
+                          <label for="inputEmail">Email</label>
+                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress">Endereço</label>
+                        <input type="text" class="form-control" id="inputAddress"
+                          placeholder="Logradouro / Número / Bairro">
+                      </div>
+                      <div class="form-group">
+                        <label for="inputAddress2">Complemento</label>
+                        <input type="text" class="form-control" id="inputAddress2"
+                          placeholder="Edifício / Apartamento / etc">
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputCity">Cidade</label>
+                          <input type="text" class="form-control" id="inputCity" placeholder="Nome da cidade">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="inputState">Estado</label>
+                          <select id="inputState" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option>BA</option>
+                            <option>PE</option>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="inputZip">CEP</label>
+                          <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button id="btn-save-product" type="button" class="btn btn-success mt-2">Salvar Produto</button>
+                    </form>
+                  </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+              </div>
+              <!-- End of Main Content -->
+
+            </div>
+          </section>
+
+          <!-- Fim do FORM -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" id="btn-new-proposal" data-dismiss="modalNewProposal">
-            Adicionar Proposta
-          </button>
+          <!-- <button type="button" class="btn btn-success" data-dismiss="modal">
+            Salvar
+          </button> -->
         </div>
 
       </div>
     </div>
   </div>
-
-
-  <!--Modal List Solution-->
-  <div class="modal fade bd-example-modal-lg" id="modal-list-solutions" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h6 class="h6 mb-4 text-gray-800" id="solution-title"></h6>
-          <button type="button" class="btn-modal-close-solution" data-dismiss="modalListSolution">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <ul id="list-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
-
-          </ul>
-          <!-- Fim da List -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="btn-cconsolidate-proposal" data-dismiss="modalNewSolution">
-            Consolidar Proposta
-          </button>
-          <button type="button" class="btn btn-success" id="btn-new-solution" data-dismiss="modalNewSolution">
-            Adicionar Solução
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!--Modal List Product-->
-  <div class="modal fade bd-example-modal-lg" id="modal-list-products" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h6 class="h6 mb-4 text-gray-800" id="product-title"></h6>
-          <button type="button" class="btn-modal-close-product" data-dismiss="modalListProduct">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          <form id="form-add-products">
-
-            <div class="form-row">
-              <div class="form-group col-4">
-                <label for="formControlSelectCategoria">Categoria</label>
-                <select class="form-control" id="formControlSelectCategoria">
-          
-                </select>
-              </div>
-          
-              <div class="form-group col-4">
-                <label for="formControlSelectProdutosPorCategoria">Equipamento</label>
-                <select class="form-control" id="formControlSelectProdutosPorCategoria">
-                  
-                </select>
-              </div>
-
-              <div class="form-group col-2">
-                <label for="inputQuantity">Quantidade</label>
-                <input type="number" class="form-control" id="inputQuantity">
-              </div>
-
-              <div class="form-group col-2 pt-3">
-                <button id="btn-add-product" type="button" class="btn btn-primary mt-2">Adicionar</button>
-              </div>
-            </div>
-
-          </form>
-          <!-- Fim do form -->
-          <hr></hr>
-          <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center"><span class="col-8">Descrição</span><span class="col-2 text-center">Quant.</span>
-              <span class="col-2 text-center">Remover</span>
-            </div>
-            <hr></hr>
-            <ul id="list-products-solutions-proposal-projects-customers" class="list-group list-group-flush" style="list-style-type: none;">
-              
-            </ul>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <span class="col-8"></span>
-              <span class="col-2 text-center">Sub-Total</span>
-              <span id="subtotal" class="col-2 text-center"></span>
-            </div>
-          </div>
-          <!-- Fim da List -->
-          <!-- <div class="d-flex justify-content-between align-items-center mt-3">
-            <textarea class="form-control" name="" id="" cols="30" rows="5"
-                    placeholder="Gourmet 4.0 zona 2 do Integra" value="Gourmet 4.0 zona 2 do Integra"></textarea>
-          </div> -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" id="btn-new-product" data-dismiss="modalNewProduct">
-            Soluções
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
@@ -512,7 +496,7 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
 
-
+  <script src="/src/utils/Format.js"></script>
   <script src="/src/controller/ZController.js"></script>
   <script src="/src/index.js"></script>
 </body>
