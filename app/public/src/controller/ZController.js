@@ -2,12 +2,32 @@ class ZController {
 
   constructor() {
 
+    this.connectFirebase();
+
     this.elementsPrototype();
     this.loadElements();
 
     this.initEvents();
     this.showPanelCustomers();
 
+  }
+
+  connectFirebase() {
+
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAjv7DpoQ3xb2M82MSxEIrGX6pJo2cfUOU",
+      authDomain: "dropbox-clone-eaa87.firebaseapp.com",
+      databaseURL: "https://dropbox-clone-eaa87.firebaseio.com",
+      projectId: "dropbox-clone-eaa87",
+      storageBucket: "dropbox-clone-eaa87.appspot.com",
+      messagingSenderId: "433019358246",
+      appId: "1:433019358246:web:0e6db5625fb8b41fc66ae7",
+      measurementId: "G-8PZH7NB8TY"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
   }
 
 
@@ -21,6 +41,8 @@ class ZController {
       this.el[Format.getCamelCase(element.id)] = element;
 
     });
+
+    $('#modal-add-customers').modal('show');
 
   }
   
@@ -75,12 +97,36 @@ class ZController {
       return this.classList.contains(name);
     }
 
+    HTMLFormElement.prototype.getForm = function () {
+      return new FormData(this);
+    }
+
+    HTMLFormElement.prototype.toJSON = function () {
+      
+      let json = {};
+
+      this.getForm().forEach((value, key) => {
+
+        json[key] = value;
+
+      });
+
+      return json;
+    }
+
   }
 
   
   
   initEvents() {
 
+    this.el.formAddCustomer.on('submit', e => {
+
+      e.preventDefault();
+
+      this.addCustomerDatabase(this.el.formAddCustomer.toJSON());
+
+    });
     
 
   }
@@ -94,6 +140,37 @@ class ZController {
 
   }
 
+
+  addCustomerDatabase(customerData) {
+
+    if (customerData) {
+
+      //let timestampNow = Date.now();
+    
+            this.getFirebaseRef().set(
+              customerData
+            );
+    
+            //$('#modal-add-customers').modal('hide');
+    
+          } else {
+    
+            console.log('Falha ao salvar registro!');
+    
+          }
+
+  }
+
+
+  getFirebaseRef(path) {
+
+    let timestampNow = Date.now();
+
+    if (!path) path = 'clientes/' + timestampNow;
+
+    return firebase.database().ref(path);
+
+  }
 
 
   // initEvents() {

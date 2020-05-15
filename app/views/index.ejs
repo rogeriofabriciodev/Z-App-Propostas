@@ -52,11 +52,11 @@
           <h1><img src="src/img/icons/person-outline.svg" alt="" width="32px" class="pb-2"/> Clientes</h1>
 
           <!-- Form Seach Customer -->
-          <form class="mt-4">
+          <form class="mt-4" id="form-panel-seach-customer">
             <div class="form-row align-items-center">
               <div class="col-10">
                 <label class="sr-only" for="customer-name">Cliente</label>
-                <input type="text" class="form-control mb-2" id="customer-name" placeholder="Cliente">
+                <input type="text" class="form-control mb-2" id="customer-name" name="customerName" placeholder="Cliente">
               </div>
               <div class="col-auto">
                 <button type="submit"  id="btn-seach-customer" class="btn btn-primary mb-2">Buscar</button>
@@ -110,11 +110,11 @@
           <h1><img src="src/img/icons/reader-outline.svg" alt="" width="32px" class="pb-2"/> Propostas</h1>
 
           <!-- Form Seach Proposal -->
-          <form class="mt-4">
+          <form class="mt-4" id="form-panel-seach-proposal">
             <div class="form-row align-items-center">
               <div class="col-10">
                 <label class="sr-only" for="Proposal-name">Proposta</label>
-                <input type="text" class="form-control mb-2" id="Proposal-name" placeholder="Proposta">
+                <input type="text" class="form-control mb-2" id="proposal-name" name="proposalName" placeholder="Proposta">
               </div>
               <div class="col-auto">
                 <button type="submit" id="btn-seach-proposal" class="btn btn-primary mb-2">Buscar</button>
@@ -162,11 +162,11 @@
           <h1><img src="src/img/icons/cube-outline.svg" alt="" width="32px" class="pb-2"/> Produtos</h1>
 
           <!-- Form Seach Product -->
-          <form class="mt-4">
+          <form class="mt-4" id="form-panel-seach-product">
             <div class="form-row align-items-center">
               <div class="col-10">
                 <label class="sr-only" for="product-name">Produto</label>
-                <input type="text" class="form-control mb-2" id="product-name" placeholder="Produto">
+                <input type="text" class="form-control mb-2" id="product-name" name="productName" placeholder="Produto">
               </div>
               <div class="col-auto">
                 <button type="submit" id="btn-seach-product" class="btn btn-primary mb-2">Buscar</button>
@@ -242,54 +242,54 @@
                     <form id="form-add-customer">
                       <div class="form-row">
                         <div class="form-group col-md-8">
-                          <label for="inputName">Nome Completo</label>
-                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                          <label for="input-name">Nome Completo</label>
+                          <input type="text" class="form-control" id="input-name" name="name" placeholder="Nome Completo">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="inputCpf">CPF</label>
-                          <input type="text" class="form-control" id="inputCpf" placeholder="Apenas Números">
+                          <label for="input-cpf">CPF</label>
+                          <input type="text" class="form-control" id="input-cpf" name="cpf" placeholder="Apenas Números">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="inputCelular">Celular</label>
-                          <input type="text" class="form-control" id="inputCelular" placeholder="Apenas número com DDD">
+                          <label for="input-celular">Celular</label>
+                          <input type="text" class="form-control" id="input-celular" name="celular" placeholder="Apenas número com DDD">
                         </div>
                         <div class="form-group col-md-8">
-                          <label for="inputEmail">Email</label>
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                          <label for="input-email">Email</label>
+                          <input type="email" class="form-control" id="input-email" name="email" placeholder="Email">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="inputAddress">Endereço</label>
-                        <input type="text" class="form-control" id="inputAddress"
+                        <label for="input-address">Endereço</label>
+                        <input type="text" class="form-control" id="input-address" name="address"
                           placeholder="Logradouro / Número / Bairro">
                       </div>
                       <div class="form-group">
-                        <label for="inputAddress2">Complemento</label>
-                        <input type="text" class="form-control" id="inputAddress2"
+                        <label for="input-address-2">Complemento</label>
+                        <input type="text" class="form-control" id="input-address-2" name="address2"
                           placeholder="Edifício / Apartamento / etc">
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="inputCity">Cidade</label>
-                          <input type="text" class="form-control" id="inputCity" placeholder="Nome da cidade">
+                          <label for="input-city">Cidade</label>
+                          <input type="text" class="form-control" id="input-city" name="city" placeholder="Nome da cidade">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="inputState">Estado</label>
-                          <select id="inputState" class="form-control">
+                          <label for="input-state">Estado</label>
+                          <select id="input-state" name="state" class="form-control">
                             <option selected>Escolha...</option>
                             <option>BA</option>
                             <option>PE</option>
                           </select>
                         </div>
                         <div class="form-group col-md-3">
-                          <label for="inputZip">CEP</label>
-                          <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
+                          <label for="input-zip">CEP</label>
+                          <input type="text" class="form-control" id="input-zip" name="zip" placeholder="Apenas números">
                         </div>
                       </div>
                       <div class="form-group">
-                        <button id="btn-save-customer" type="button" class="btn btn-success mt-2">Salvar Cliente</button>
+                        <button id="btn-save-customer" type="submit" class="btn btn-success mt-2">Salvar Cliente</button>
                     </form>
                   </div>
 
