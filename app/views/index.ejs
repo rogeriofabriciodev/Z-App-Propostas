@@ -12,12 +12,15 @@
   <link href="bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/dropbox-clone.css" rel="stylesheet">
+  <link href="assets/css/fab.css" rel="stylesheet">
+
   <style>
 
   </style>
 </head>
 
 <body>
+
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm rounded">
     <h1 class="ml-5 text-light">.Z</h1>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -29,13 +32,16 @@
         <div class="col-8 mx-5">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Cliente <span class="sr-only">(página atual)</span></a>
+              <a class="nav-link" href="#" id="btn-home">Home <span class="sr-only" >(página atual)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Propostas <span class="sr-only">(página atual)</span></a>
+              <a class="nav-link" href="#" id="btn-clientes">Clientes <span class="sr-only" >(página atual)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Produtos <span class="sr-only">(página atual)</span></a>
+              <a class="nav-link" href="#" id="btn-propostas">Propostas <span class="sr-only">(página atual)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#" id="btn-produtos">Produtos <span class="sr-only">(página atual)</span></a>
             </li>
           </ul>
         </div>
@@ -59,7 +65,7 @@
                 <input type="text" class="form-control mb-2" id="customer-name" name="customerName" placeholder="Cliente">
               </div>
               <div class="col-auto">
-                <button type="submit"  id="btn-seach-customer" class="btn btn-primary mb-2">Buscar</button>
+                <button type="submit"  id="btn-seach-customer" class="btn btn-dark mb-2">Buscar</button>
               </div>
             </div>
           </form>
@@ -75,31 +81,19 @@
                 <th scope="col">Cidade</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Marcos Padua</td>
-                <td>marcos.padua@exemplo.com</td>
-                <td class="text-center">71 99999 0000</td>
-                <td>Salvador</td>
-              </tr>
-              <tr>
-                <td>Ricardo Perrone</td>
-                <td>ricardo.perrone@exemplo.com</td>
-                <td class="text-center">71 99999 1111</td>
-                <td>Vitória da Conquista</td>
-              </tr>
-              <tr>
-                <td>Francisco Nogueira</td>
-                <td>francisco.nogueira@exemplo.com</td>
-                <td class="text-center">71 99999 2222</td>
-                <td>Recife</td>
-              </tr>
+            <tbody id="tbody-customer">
+              
             </tbody>
           </table>
           <!-- Table Customers End -->
 
         </div>
       </div>
+      <!-- Float Button -->
+      <div class="zoom">
+        <a class="zoom-fab zoom-btn-large bg-dark text-light" id="zoom-btn-add-customer">+</a>  
+      </div>
+
     </div>
     <!-- Customers Panel End -->
 
@@ -117,7 +111,7 @@
                 <input type="text" class="form-control mb-2" id="proposal-name" name="proposalName" placeholder="Proposta">
               </div>
               <div class="col-auto">
-                <button type="submit" id="btn-seach-proposal" class="btn btn-primary mb-2">Buscar</button>
+                <button type="submit" id="btn-seach-proposal" class="btn btn-dark mb-2">Buscar</button>
               </div>
             </div>
           </form>
@@ -133,25 +127,20 @@
                 <th scope="col" class="text-center">Total</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Praia do Forte</td>
-                <td>Marcos Padua</td>
-                <td class="text-center">03/04/2020</td>
-                <td class="text-right">R$ 120.000</td>
-              </tr>
-              <tr>
-                <td>Mansão Zafiro</td>
-                <td>Ricardo Perrone</td>
-                <td class="text-center">22/01/2020</td>
-                <td class="text-right">R$ 100.000</td>
-              </tr>
+            <tbody id="tbody-proposal">
+              
             </tbody>
           </table>
           <!-- Table Proposals End -->
 
         </div>
       </div>
+
+      <!-- Float Button -->
+      <div class="zoom">
+        <a class="zoom-fab zoom-btn-large bg-dark text-light" id="zoom-btn-add-proposal">+</a>  
+      </div>
+
     </div>
     <!-- Proposals Panel End-->
 
@@ -169,7 +158,7 @@
                 <input type="text" class="form-control mb-2" id="product-name" name="productName" placeholder="Produto">
               </div>
               <div class="col-auto">
-                <button type="submit" id="btn-seach-product" class="btn btn-primary mb-2">Buscar</button>
+                <button type="submit" id="btn-seach-product" class="btn btn-dark mb-2">Buscar</button>
               </div>
             </div>
           </form>
@@ -210,6 +199,12 @@
 
         </div>
       </div>
+
+      <!-- Float Button -->
+      <div class="zoom">
+        <a class="zoom-fab zoom-btn-large bg-dark text-light" id="zoom-btn-add-product">+</a>  
+      </div>
+
     </div>
     <!-- Products Panel End-->
 
@@ -271,7 +266,7 @@
                           placeholder="Edifício / Apartamento / etc">
                       </div>
                       <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                           <label for="input-city">Cidade</label>
                           <input type="text" class="form-control" id="input-city" name="city" placeholder="Nome da cidade">
                         </div>
@@ -289,7 +284,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <button id="btn-save-customer" type="submit" class="btn btn-success mt-2">Salvar Cliente</button>
+                        <button id="btn-save-customer" type="submit" class="btn btn-dark mt-2">Salvar Cliente</button>
                     </form>
                   </div>
 
@@ -341,17 +336,17 @@
                     <form id="form-add-proposal">
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="inputName">Proposta</label>
-                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                          <label for="input-proposal-name">Proposta</label>
+                          <input type="text" class="form-control" id="input-proposal-name" name="proposalName" placeholder="Referência para proposta">
                         </div>
                         <div class="form-group col-4">
-                          <label for="formControlSelectCliente">Cliente</label>
-                          <select class="form-control" id="formControlSelectCliente">
+                          <label for="input-proposal-customer">Cliente</label>
+                          <select class="form-control" id="input-proposal-customer" name="proposalCustomer">
                             
                           </select>
                         </div>
                         <div class="form-group col-3">
-                          <button id="btn-save-proposal" type="button" class="btn btn-success mt-4">Salvar Proposta</button>
+                          <button id="btn-save-proposal" type="button" class="btn btn-dark mt-4">Salvar Proposta</button>
                         </div>
                       </div>
                     </form>
@@ -402,55 +397,54 @@
                   <div>
                     <form id="form-add-product">
                       <div class="form-row">
-                        <div class="form-group col-md-8">
-                          <label for="inputName">Nome Completo</label>
-                          <input type="text" class="form-control" id="inputName" placeholder="Nome Completo">
+                        <div class="form-group col-md-3">
+                          <label for="code-zafiro-product">Código Zafiro</label>
+                          <input type="text" class="form-control" id="code-zafiro-product" name="codeZafiro" placeholder="Código Zafiro">
                         </div>
-                        <div class="form-group col-md-4">
-                          <label for="inputCpf">CPF</label>
-                          <input type="text" class="form-control" id="inputCpf" placeholder="Apenas Números">
+                        <div class="form-group col-md-3">
+                          <label for="code-manufacturer-product">Código Fabricante</label>
+                          <input type="text" class="form-control" id="code-manufacturer-product" name="codeManufacture" placeholder="Código Fabricante">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="nickname-product">Nome Fantasia</label>
+                          <input type="text" class="form-control" id="nickname-product" name="nickname" placeholder="Nome Fantasia">
                         </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-4">
-                          <label for="inputCelular">Celular</label>
-                          <input type="text" class="form-control" id="inputCelular" placeholder="Apenas número com DDD">
+                          <label for="manufacture-product">Fabricante</label>
+                          <select id="manufacture-product" name="manufacture" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option></option>
+                          </select>
                         </div>
-                        <div class="form-group col-md-8">
-                          <label for="inputEmail">Email</label>
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        <div class="form-group col-md-4">
+                          <label for="category-product">Categoria</label>
+                          <select id="category-product" name="category" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option></option>
+                          </select>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputAddress">Endereço</label>
-                        <input type="text" class="form-control" id="inputAddress"
-                          placeholder="Logradouro / Número / Bairro">
-                      </div>
-                      <div class="form-group">
-                        <label for="inputAddress2">Complemento</label>
-                        <input type="text" class="form-control" id="inputAddress2"
-                          placeholder="Edifício / Apartamento / etc">
+                        <div class="form-group col-md-4">
+                          <label for="subcategory-product">Subcategoria</label>
+                          <select id="subcategory-product" name="subcategory" class="form-control">
+                            <option selected>Escolha...</option>
+                            <option></option>
+                          </select>
+                        </div>
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="inputCity">Cidade</label>
-                          <input type="text" class="form-control" id="inputCity" placeholder="Nome da cidade">
+                          <label for="variant-one-product">Variante 1</label>
+                          <input type="text" class="form-control" id="variant-two-product" name="variantOne" placeholder="Nome da cidade">
                         </div>
-                        <div class="form-group col-md-4">
-                          <label for="inputState">Estado</label>
-                          <select id="inputState" class="form-control">
-                            <option selected>Escolha...</option>
-                            <option>BA</option>
-                            <option>PE</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                          <label for="inputZip">CEP</label>
-                          <input type="text" class="form-control" id="inputZip" placeholder="Apenas números">
+                        <div class="form-group col-md-6">
+                          <label for="variant-two-product">Variante 2</label>
+                          <input type="text" class="form-control" id="variant-two-product" name="varianTwo" placeholder="Nome da cidade">
                         </div>
                       </div>
                       <div class="form-group">
-                        <button id="btn-save-product" type="button" class="btn btn-success mt-2">Salvar Produto</button>
+                        <button id="btn-save-product" type="button" class="btn btn-dark mt-2">Salvar Produto</button>
                     </form>
                   </div>
 

@@ -8,7 +8,7 @@ class ZController {
     this.loadElements();
 
     this.initEvents();
-    this.showPanelCustomers();
+    this.hideAllPanels();
 
   }
 
@@ -36,64 +36,62 @@ class ZController {
 
     this.el = {};
 
-    document.querySelectorAll('[id]').forEach( element => {
+    document.querySelectorAll('[id]').forEach(element => {
 
       this.el[Format.getCamelCase(element.id)] = element;
 
     });
 
-    $('#modal-add-customers').modal('show');
-
   }
-  
+
 
   elementsPrototype() {
 
-    Element.prototype.hide = function(){
+    Element.prototype.hide = function () {
       this.style.display = 'none';
       return this;
     }
 
-    Element.prototype.show = function(){
+    Element.prototype.show = function () {
       this.style.display = 'block';
       return this;
     }
 
-    Element.prototype.toggle = function(){
+    Element.prototype.toggle = function () {
       this.style.display = (this.style.display === 'none') ? 'block' : 'none';
       return this;
     }
 
-    Element.prototype.on = function(events, fn){
+    Element.prototype.on = function (events, fn) {
       events.split(' ').forEach(event => {
         this.addEventListener(event, fn);
       });
       return this;
     }
 
-    Element.prototype.css = function(styles){
+    Element.prototype.css = function (styles) {
       for (let name in styles) {
         this.style[name] = styles[name];
       }
       return this;
     }
 
-    Element.prototype.addClass = function(name){
+    Element.prototype.addClass = function (name) {
       this.classList.add(name);
       return this;
     }
 
-    Element.prototype.removeClass = function(name){
+    Element.prototype.removeClass = function (name) {
       this.classList.remove(name);
       return this;
     }
 
-    Element.prototype.toggleClass = function(name){
+    Element.prototype.toggleClass = function (name) {
       this.classList.toggle(name);
       return this;
     }
 
-    Element.prototype.hasClass = function(name){
+    Element.prototype.hasClass = function (name) {
       return this.classList.contains(name);
     }
 
@@ -102,7 +100,7 @@ class ZController {
     }
 
     HTMLFormElement.prototype.toJSON = function () {
-      
+
       let json = {};
 
       this.getForm().forEach((value, key) => {
@@ -116,18 +114,82 @@ class ZController {
 
   }
 
-  
-  
+
+
   initEvents() {
+
+
+    this.el.btnHome.on('click', e => {
+
+      this.hideAllPanels();
+
+    });
+
+    this.el.btnClientes.on('click', e => {
+
+      this.readAllCustomers();
+
+      this.showPanelCustomers();
+
+    });
+
+    this.el.btnPropostas.on('click', e => {
+
+      this.readAllFilterCustomers();
+
+      this.showPanelProposals();
+
+    });
+
+    this.el.btnProdutos.on('click', e => {
+
+      this.showPanelProducts();
+
+    });
+
+    this.el.zoomBtnAddCustomer.on('click', e => {
+
+      $('#modal-add-customers').modal('show');
+      $('#modal-add-proposal').modal('hide');
+      $('#modal-add-products').modal('hide');
+
+    });
+
+    this.el.zoomBtnAddProposal.on('click', e => {
+
+      $('#modal-add-customers').modal('hide');
+      $('#modal-add-proposal').modal('show');
+      $('#modal-add-products').modal('hide');
+
+    });
+
+    this.el.zoomBtnAddProduct.on('click', e => {
+
+      $('#modal-add-customers').modal('hide');
+      $('#modal-add-proposal').modal('hide');
+      $('#modal-add-products').modal('show');
+
+    });
 
     this.el.formAddCustomer.on('submit', e => {
 
       e.preventDefault();
 
+      this.el.btnSaveCustomer.css().disabled;
+
       this.addCustomerDatabase(this.el.formAddCustomer.toJSON());
 
+      $('#modal-add-customers').modal('hide');
+
     });
-    
+
+  }
+
+  hideAllPanels() {
+
+    this.el.customersPanel.hide();
+    this.el.proposalsPanel.hide();
+    this.el.productsPanel.hide();
 
   }
 
@@ -140,24 +202,36 @@ class ZController {
 
   }
 
+  showPanelProposals() {
+
+    this.el.customersPanel.hide();
+    this.el.proposalsPanel.show();
+    this.el.productsPanel.hide();
+
+  }
+
+  showPanelProducts() {
+
+    this.el.customersPanel.hide();
+    this.el.proposalsPanel.hide();
+    this.el.productsPanel.show();
+
+  }
+
 
   addCustomerDatabase(customerData) {
 
     if (customerData) {
 
-      //let timestampNow = Date.now();
-    
-            this.getFirebaseRef().set(
-              customerData
-            );
-    
-            //$('#modal-add-customers').modal('hide');
-    
-          } else {
-    
-            console.log('Falha ao salvar registro!');
-    
-          }
+      this.getFirebaseRef().set(
+        customerData
+      );
+
+    } else {
+
+      console.log('Falha ao salvar registro!');
+
+    }
 
   }
 
@@ -166,11 +240,156 @@ class ZController {
 
     let timestampNow = Date.now();
 
-    if (!path) path = 'clientes/' + timestampNow;
+    if (!path) path = 'customers/' + timestampNow;
 
     return firebase.database().ref(path);
 
   }
+
+  getCustomersFirebaseRef(path) {
+
+    if (!path) path = 'customers/';
+
+    return firebase.database().ref(path);
+
+  }
+
+  readAllCustomers() {
+
+    this.getCustomersFirebaseRef().on('value', snapshot => {
+
+      this.el.tbodyCustomer.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        if (data !== '') {
+
+          this.el.tbodyCustomer.appendChild(this.getAllCustomerView(data, key));
+
+        }
+
+      });
+
+    });
+
+  }
+
+  getAllCustomerView(data, key) {
+
+    let tr = document.createElement('tr');
+
+    tr.dataset.key = key;
+    tr.dataset.file = JSON.stringify(data);
+
+    tr.innerHTML = `
+      <tr>
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td class="text-center">${data.celular}</td>
+        <td>${data.city}</td>
+      </tr>
+    `;
+
+    return tr;
+
+  }
+
+
+  getProposalsFirebaseRef(path) {
+
+    if (!path) path = 'proposals/';
+
+    return firebase.database().ref(path);
+
+  }
+
+  readAllProposals() {
+
+    this.getProposalsFirebaseRef().on('value', snapshot => {
+
+      this.el.tbodyProposal.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        if (data !== '') {
+
+          this.el.tbodyProposal.appendChild(this.getAllProposalsView(data, key));
+
+        }
+
+      });
+
+    });
+
+  }
+
+  getAllProposalsView(data, key) {
+
+    let tr = document.createElement('tr');
+
+    tr.dataset.key = key;
+    tr.dataset.file = JSON.stringify(data);
+
+    tr.innerHTML = `
+      <tr>
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td class="text-center">${data.celular}</td>
+        <td>${data.city}</td>
+      </tr>
+    `;
+
+    return tr;
+
+  }
+
+
+  // getCustomersOptionsView(dataName, key) {
+
+  //   let option = document.createElement('option');
+
+  //   option.dataset.key = key;
+  //   option.dataset.file = dataName
+
+  //   option.innerHTML = `
+  //     <option id='customerName' value='${dataName}'>${dataName}</option>
+  //   `;
+
+  //   return option;
+
+  // }
+
+
+  readAllFilterCustomers() {
+
+    this.getCustomersFirebaseRef().on('value', snapshot => {
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+        // let arrayCustomers = [];
+        let dataName = data.name;
+
+        // if (dataName !== '') {
+
+        //   arrayCustomers.push(dataName);
+
+        // }
+        console.log(dataName);
+      });
+
+    });
+
+  }
+
+
 
 
   // initEvents() {
@@ -198,12 +417,12 @@ class ZController {
   //   this.btnAddProductEl.addEventListener('click', e => {
 
   //     let timestampNow = Date.now();
-      
+
   //     let price = this.selectProduct.options[this.selectProduct.selectedIndex].dataset.price;
 
   //     this.productNameSelected = this.selectProduct.options[this.selectProduct.selectedIndex].value;
   //     let quantityProduct = this.inputQuantityEl.value;
-      
+
   //     this.addNewProduct(quantityProduct, price);
 
   //   });
@@ -242,7 +461,7 @@ class ZController {
   //     // this.addNewProduct();
 
   //     $('#modal-list-products').modal('hide');
-  
+
   //     $('#modal-list-solutions').modal('show');
 
   //   });
@@ -256,7 +475,7 @@ class ZController {
   //     if (consultName !== '') {
 
   //       this.readConsultCustomers(consultName);
-        
+
   //     } else {
 
   //       console.log('Campo nome vazio');
@@ -383,13 +602,13 @@ class ZController {
   //       //  TODO Apensenter o total na consolidação da proposta
 
 
-        
+
   //     });
 
   //     // this.proposalName = snapshot.val().proposalName;
 
   //   });
-    
+
   // }
 
 
@@ -451,7 +670,7 @@ class ZController {
   // addNewProduct(quantityProduct, price) {
 
   //   // $('#modal-list-products').modal('hide');
-  
+
   //   // $('#modal-add-product').modal('show');
 
   //   let timestampNow = Date.now();
@@ -485,7 +704,7 @@ class ZController {
   //   }
 
   // }
-  
+
 
 
   // getFirebaseRef(path) {
@@ -569,7 +788,7 @@ class ZController {
   // }
 
 
-  
+
   // readConsultProjectCustomerById(id) {
 
   //   this.projectKey = id;
@@ -763,7 +982,7 @@ class ZController {
   // }
 
 
-  
+
   // initEventsLi(li) {
 
   //   let key;
@@ -807,9 +1026,9 @@ class ZController {
   //             });
 
   //             if (this.listProjectCustomersEl.childElementCount === 0) {
-        
+
   //               this.addNewProject();
-        
+
   //             }
 
   //             this.readConsultCustomerById(this.customerKey);
@@ -820,40 +1039,40 @@ class ZController {
 
   //           case 'btn-add-proposal':
   //             this.projectKey = lastLiKey;
-  
+
   //             this.refProjectCustomer = 'ssa/customers/' + this.customerKey + '/projects/' + this.projectKey + '/proposal';
-  
+
   //             $('#modal-list-projects').modal('hide');
-  
+
   //             $('#modal-list-proposal').modal('show');
-  
+
   //             firebase.database().ref(this.refProjectCustomer).on('value', snapshot => {
-  
+
   //               this.listProposalProjectsCustomersEl.innerHTML = '';
-  
+
   //               snapshot.forEach(snapshotItem => {
-  
+
   //                 let key = snapshotItem.key;
   //                 let data = snapshotItem.val();
-  
+
   //                 if (key !== '') {
-  
+
   //                   this.listProposalProjectsCustomersEl.appendChild(this.getProposalProjectCustomerView(data, key));
-                    
+
   //                 } 
-  
+
   //               });
-  
+
   //               if (this.listProposalProjectsCustomersEl.childElementCount === 0) {
-          
+
   //                 this.addNewProposal();
-          
+
   //               }
-  
+
   //               this.readConsultCustomerById(this.customerKey);
   //               this.readConsultProjectCustomerById(this.projectKey);
   //               this.proposalTitleEl.innerHTML = this.customerName + ' > ' + this.projectName + ' > Propostas';
-  
+
   //             });
   //             break;
 
@@ -878,15 +1097,15 @@ class ZController {
   //               if (key !== '') {
 
   //                 this.listSolutionsProposalProjectsCustomersEl.appendChild(this.getSolutionProposalProjectCustomerView(data, key));
-                  
+
   //               } 
 
   //             });
 
   //             if (this.listSolutionsProposalProjectsCustomersEl.childElementCount === 0) {
-        
+
   //               this.addNewSolution();
-        
+
   //             }
 
   //             this.readConsultCustomerById(this.customerKey);
@@ -896,7 +1115,7 @@ class ZController {
 
   //           });
   //           break;
-        
+
   //         case 'btn-add-product':
 
   //           let arrayPrice;
@@ -925,7 +1144,7 @@ class ZController {
   //               if (key !== '') {
 
   //                 this.listProductsSolutionsProposalProjectsCustomersEl.appendChild(this.getProductSolutionProposalProjectCustomerView(data, key));
-                  
+
   //               } 
 
   //               let item = (data.salePrice * parseFloat(data.quantity));
@@ -933,13 +1152,13 @@ class ZController {
   //             });
 
   //             this.subtotal = arrayPrice.reduce((total, currentElement) => total + currentElement);
-              
+
   //             this.subtotalEl.innerHTML = this.subtotal;
 
   //             // if (this.listProductsSolutionsProposalProjectsCustomersEl.childElementCount === 0) {
-        
+
   //             //   this.addNewProduct();
-        
+
   //             // }
 
   //             this.readConsultCustomerById(this.customerKey);
@@ -954,7 +1173,7 @@ class ZController {
 
   //           this.itemKey = lastLiKey;
   //           this.removeItem(this.itemKey);
-          
+
   //           break;
 
   //         default:
@@ -975,7 +1194,7 @@ class ZController {
 
   //   // option.dataset.key = key;
   //   option.dataset.file = dataName
-    
+
   //   option.innerHTML = `
   //     <option id='categoryName' value='${dataName}'>${dataName}</option>
   //   `;
@@ -1026,7 +1245,7 @@ class ZController {
   //   option.dataset.key = key;
   //   option.dataset.file = data;
   //   option.dataset.price = data.precoVenda;
-    
+
   //   option.innerHTML = `
   //     <option value='${key}' dataset-file='${data}' dataset-price='${data.precoVenda}'>${data.nomeFantasia}</option>
   //   `;
@@ -1052,7 +1271,7 @@ class ZController {
   //         this.formControlSelectProdutosPorCategoriaEl.appendChild(this.getProductByCategoryView(data, key));
 
   //       }
-        
+
   //     });
 
   //   });
@@ -1064,7 +1283,7 @@ class ZController {
 
   //   let ref = this.refSolutionProposalProjectCustomer + key;
   //   firebase.database().ref(ref).remove();
-    
+
   // }
-  
+
 }
