@@ -135,7 +135,11 @@ class ZController {
 
     this.el.btnPropostas.on('click', e => {
 
+      this.getCustomersOptionsView();
+
       this.readAllFilterCustomers();
+
+      this.readAllProposals();
 
       this.showPanelProposals();
 
@@ -183,6 +187,19 @@ class ZController {
 
     });
 
+
+    this.el.formAddProposal.on('submit', e => {
+
+      e.preventDefault();
+
+      this.el.btnSaveProposal.css().disabled;
+
+      this.addProposalDatabase(this.el.formAddProposal.toJSON());
+
+      $('#modal-add-proposal').modal('hide');
+
+    });
+
   }
 
   hideAllPanels() {
@@ -223,7 +240,7 @@ class ZController {
 
     if (customerData) {
 
-      this.getFirebaseRef().set(
+      this.getFirebaseCustomAddRef().set(
         customerData
       );
 
@@ -236,11 +253,42 @@ class ZController {
   }
 
 
-  getFirebaseRef(path) {
+  addProposalDatabase(proposalData) {
+
+    let timestamp = Date.now();
+    let data = proposalData;
+    data = {...data, timestamp, subtotal: 0.0}
+    
+    if (data) {
+
+      this.getFirebaseProposalAddRef().set(
+        data
+      );
+
+    } else {
+
+      console.log('Falha ao salvar registro!');
+
+    }
+
+  }
+
+
+  getFirebaseCustomAddRef(path) {
 
     let timestampNow = Date.now();
 
     if (!path) path = 'customers/' + timestampNow;
+
+    return firebase.database().ref(path);
+
+  }
+
+  getFirebaseProposalAddRef(path) {
+
+    let timestampNow = Date.now();
+
+    if (!path) path = 'proposals/' + timestampNow;
 
     return firebase.database().ref(path);
 
@@ -338,10 +386,10 @@ class ZController {
 
     tr.innerHTML = `
       <tr>
-        <td>${data.name}</td>
-        <td>${data.email}</td>
-        <td class="text-center">${data.celular}</td>
-        <td>${data.city}</td>
+        <td>${data.proposalName}</td>
+        <td>${data.proposalCustomer}</td>
+        <td class="text-center">${data.timestamp}</td>
+        <td class="text-right">${data.subtotal}</td>
       </tr>
     `;
 
@@ -350,44 +398,46 @@ class ZController {
   }
 
 
-  // getCustomersOptionsView(dataName, key) {
+  getCustomersOptionsView(dataName, key) {
 
-  //   let option = document.createElement('option');
+    let option = document.createElement('option');
 
-  //   option.dataset.key = key;
-  //   option.dataset.file = dataName
+    option.dataset.key = key;
+    option.dataset.file = dataName
 
-  //   option.innerHTML = `
-  //     <option id='customerName' value='${dataName}'>${dataName}</option>
-  //   `;
+    option.innerHTML = `
+      <option id='customerName' value='${dataName}'>${dataName}</option>
+    `;
 
-  //   return option;
+    return option;
 
-  // }
-
+  }
 
   readAllFilterCustomers() {
 
     this.getCustomersFirebaseRef().on('value', snapshot => {
 
+      this.el.inputProposalCustomer.innerHTML = '';
+
       snapshot.forEach(snapshotItem => {
 
         let key = snapshotItem.key;
         let data = snapshotItem.val();
-        // let arrayCustomers = [];
         let dataName = data.name;
 
-        // if (dataName !== '') {
+        if (dataName !== '') {
 
-        //   arrayCustomers.push(dataName);
+          this.el.inputProposalCustomer.appendChild(this.getCustomersOptionsView(dataName, key));
 
-        // }
-        console.log(dataName);
+        }
+
       });
 
     });
-
   }
+
+
+ 
 
 
 
