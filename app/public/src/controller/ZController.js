@@ -3,10 +3,9 @@ class ZController {
   constructor() {
 
     this.connectFirebase();
-
+    
     this.elementsPrototype();
     this.loadElements();
-
     this.initEvents();
     this.hideAllPanels();
 
@@ -175,6 +174,7 @@ class ZController {
 
     });
 
+
     this.el.formAddCustomer.on('submit', e => {
 
       e.preventDefault();
@@ -201,6 +201,7 @@ class ZController {
     });
 
   }
+
 
   hideAllPanels() {
 
@@ -354,6 +355,7 @@ class ZController {
 
   }
 
+
   readAllProposals() {
 
     this.getProposalsFirebaseRef().on('value', snapshot => {
@@ -377,24 +379,121 @@ class ZController {
 
   }
 
+
   getAllProposalsView(data, key) {
 
     let tr = document.createElement('tr');
 
     tr.dataset.key = key;
     tr.dataset.file = JSON.stringify(data);
+    tr.dataset.name = 'open-proposal';
+    tr.dataset.proposalName = data.proposalName;
+    tr.dataset.proposalCustomer = data.proposalCustomer;
 
     tr.innerHTML = `
       <tr>
-        <td>${data.proposalName}</td>
+        <td><div type="button" id="open-proposal" dataset-key="${key}">${data.proposalName}</div></td>
         <td>${data.proposalCustomer}</td>
         <td class="text-center">${data.timestamp}</td>
         <td class="text-right">${data.subtotal}</td>
       </tr>
     `;
 
+    this.initEventsTr(tr);
+    
     return tr;
 
+  }
+
+
+  getSolutionsFirebaseRef(path) {
+
+    if (!path) path = 'proposals/solutions/';
+
+    return firebase.database().ref(path);
+
+  }
+
+
+  readAllSolutionsByProposals(id) {
+
+    let path = 'proposals/' + id + '/solutions/';
+
+    firebase.database().ref(path).on('value', snapshot => {
+
+      this.el.tbodySolution.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+        let solutionName = data.solutionName;
+        let subtotal = data.subtotal;
+
+        if (data !== '') {
+
+          this.el.tbodySolution.appendChild(this.getAllSolutionsByProposalView(subtotal, solutionName, data, key));
+
+        }
+
+      });
+
+    });
+
+  }
+
+
+  getAllSolutionsByProposalView(subtotal, solutionName, data, key) {
+
+    let tr = document.createElement('tr');
+
+    tr.dataset.key = key;
+    tr.dataset.file = JSON.stringify(data);
+    tr.dataset.name = 'proposal-solution';
+    tr.dataset.solutionName = solutionName;
+    tr.dataset.subtotal = subtotal;
+
+    tr.innerHTML = `
+      <tr>
+        <td><div type="button" id="proposal-solution">${tr.dataset.solutionName}</div></td>
+        <td class="text-right">${tr.dataset.subtotal}</td>
+      </tr>
+    `;
+
+    this.initEventsTr(tr);
+
+    return tr;
+
+  }
+
+
+  initEventsTr(tr) {
+    tr.on('click', e => {
+
+      switch (tr.dataset.name) {
+        
+        case ('open-proposal'):
+        
+          $('#modal-add-customers').modal('hide');
+          $('#modal-add-proposal').modal('hide');
+          $('#modal-add-products').modal('hide');
+          $('#modal-add-solution').modal('show');
+    
+          this.el.titleModalSolution.innerHTML = tr.dataset.proposalName + " | " + tr.dataset.proposalCustomer;
+          
+          this.readAllSolutionsByProposals(tr.dataset.key);
+
+          break;
+
+        case ('proposal-solution'):
+          console.log('solution');
+          break;
+      
+        default:
+          break;
+      }
+    
+    });
   }
 
 
@@ -403,7 +502,7 @@ class ZController {
     let option = document.createElement('option');
 
     option.dataset.key = key;
-    option.dataset.file = dataName
+    option.dataset.file = dataName;
 
     option.innerHTML = `
       <option id='customerName' value='${dataName}'>${dataName}</option>
