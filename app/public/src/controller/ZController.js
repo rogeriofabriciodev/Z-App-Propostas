@@ -2,12 +2,23 @@ class ZController {
 
   constructor() {
 
+
+    // this.addProduct = document.getElementById('#add-product');
+
     this.connectFirebase();
     
     this.elementsPrototype();
     this.loadElements();
     this.initEvents();
     this.hideAllPanels();
+
+    this.proposalKey = '';
+    this.solutionKey = '';
+    this.cartKey = '';
+
+    this.arrayCategories = [];
+    this.categoryName = "";
+
 
   }
 
@@ -117,6 +128,7 @@ class ZController {
 
   initEvents() {
 
+    
 
     this.el.btnHome.on('click', e => {
 
@@ -134,9 +146,9 @@ class ZController {
 
     this.el.btnPropostas.on('click', e => {
 
-      this.getCustomersOptionsView();
-
       this.readAllFilterCustomers();
+
+      this.getCustomersOptionsView();
 
       this.readAllProposals();
 
@@ -155,6 +167,7 @@ class ZController {
       $('#modal-add-customers').modal('show');
       $('#modal-add-proposal').modal('hide');
       $('#modal-add-products').modal('hide');
+      $('#modal-add-solutions').modal('hide');
 
     });
 
@@ -163,6 +176,7 @@ class ZController {
       $('#modal-add-customers').modal('hide');
       $('#modal-add-proposal').modal('show');
       $('#modal-add-products').modal('hide');
+      $('#modal-add-solutions').modal('hide');
 
     });
 
@@ -171,6 +185,17 @@ class ZController {
       $('#modal-add-customers').modal('hide');
       $('#modal-add-proposal').modal('hide');
       $('#modal-add-products').modal('show');
+      $('#modal-add-solutions').modal('hide');
+      
+
+    });
+
+    this.el.zoomBtnAddSolutions.on('click', e => {
+
+      $('#modal-add-customers').modal('hide');
+      $('#modal-add-proposal').modal('hide');
+      $('#modal-add-products').modal('hide');
+      $('#modal-add-solutions').modal('show'); 
 
     });
 
@@ -188,6 +213,7 @@ class ZController {
     });
 
 
+
     this.el.formAddProposal.on('submit', e => {
 
       e.preventDefault();
@@ -200,6 +226,31 @@ class ZController {
 
     });
 
+
+    this.el.formAddSolution.on('submit', e => {
+
+      e.preventDefault();
+
+      this.el.btnSaveSolution.css().disabled;
+
+      this.addSolutionDatabase(this.el.formAddSolution.toJSON());
+
+      $('#modal-add-solutions').modal('hide');
+
+    });
+
+
+    this.el.formAddProduct.on('submit', e => {
+
+      e.preventDefault();
+
+      this.el.btnAddProduct.css().disabled;
+
+      // this.addProductInSolutionDatabase(this.el.formAddProduct.toJSON());
+
+    console.log(this.el.formAddProduct.toJSON());
+    });
+
   }
 
 
@@ -208,6 +259,7 @@ class ZController {
     this.el.customersPanel.hide();
     this.el.proposalsPanel.hide();
     this.el.productsPanel.hide();
+    this.el.solutionsPanel.hide();
 
   }
 
@@ -217,6 +269,7 @@ class ZController {
     this.el.customersPanel.show();
     this.el.proposalsPanel.hide();
     this.el.productsPanel.hide();
+    this.el.solutionsPanel.hide();
 
   }
 
@@ -225,6 +278,7 @@ class ZController {
     this.el.customersPanel.hide();
     this.el.proposalsPanel.show();
     this.el.productsPanel.hide();
+    this.el.solutionsPanel.hide();
 
   }
 
@@ -233,6 +287,16 @@ class ZController {
     this.el.customersPanel.hide();
     this.el.proposalsPanel.hide();
     this.el.productsPanel.show();
+    this.el.solutionsPanel.hide();
+
+  }
+
+  showPanelSolutions() {
+
+    this.el.customersPanel.hide();
+    this.el.proposalsPanel.hide();
+    this.el.productsPanel.hide();
+    this.el.solutionsPanel.show();
 
   }
 
@@ -258,11 +322,57 @@ class ZController {
 
     let timestamp = Date.now();
     let data = proposalData;
-    data = {...data, timestamp, subtotal: 0.0}
+    data = {...data, timestamp, proposalTotal: 0.0}
     
     if (data) {
 
       this.getFirebaseProposalAddRef().set(
+        data
+      );
+
+      this.el.inputProposalName.innerHTML = '';
+
+    } else {
+
+      console.log('Falha ao salvar registro!');
+
+    }
+
+  }
+
+
+  addSolutionDatabase(solutionData) {
+
+    let timestamp = Date.now();
+    let data = solutionData;
+    data = {...data, timestamp, solutionTotal: 0.0}
+    
+    if (data) {
+      
+      this.getFirebaseSolutionsAddRef().set(
+        data
+      );
+
+    } else {
+
+      console.log('Falha ao salvar registro!');
+
+    }
+
+  }
+
+
+  addProductInSolutionDatabase(productInSolutionData) {
+
+    let timestamp = Date.now();
+    let data = productInSolutionData;
+    data = {...data, timestamp}
+
+    console.log(data);
+    
+    if (data) {
+      
+      this.getFirebaseProductInSolutionsAddRef().set(
         data
       );
 
@@ -294,6 +404,30 @@ class ZController {
     return firebase.database().ref(path);
 
   }
+
+
+  getFirebaseSolutionsAddRef(path) {
+
+    let timestampNow = Date.now();
+
+    if (!path) path = 'proposals/' + this.proposalKey + '/solutions/' + timestampNow;
+
+    return firebase.database().ref(path);
+
+  }
+
+
+  getFirebaseProductInSolutionsAddRef(path) {
+
+    let timestampNow = Date.now();
+
+    if (!path) path = 'proposals/' + this.proposalKey + '/solutions/' + this.solutionKey + '/cart/' + timestampNow;
+    console.log(path);
+
+    return firebase.database().ref(path);
+
+  }
+
 
   getCustomersFirebaseRef(path) {
 
@@ -358,6 +492,8 @@ class ZController {
 
   readAllProposals() {
 
+    let totalProposal;
+
     this.getProposalsFirebaseRef().on('value', snapshot => {
 
       this.el.tbodyProposal.innerHTML = '';
@@ -366,6 +502,7 @@ class ZController {
 
         let key = snapshotItem.key;
         let data = snapshotItem.val();
+        totalProposal = data.proposalTotal;
 
         if (data !== '') {
 
@@ -374,6 +511,8 @@ class ZController {
         }
 
       });
+
+      this.el.titleProposalTotal.innerHTML = 'Proposta - R$ ' + totalProposal;
 
     });
 
@@ -395,7 +534,7 @@ class ZController {
         <td><div type="button" id="open-proposal" dataset-key="${key}">${data.proposalName}</div></td>
         <td>${data.proposalCustomer}</td>
         <td class="text-center">${data.timestamp}</td>
-        <td class="text-right">${data.subtotal}</td>
+        <td class="text-right">${data.proposalTotal}</td>
       </tr>
     `;
 
@@ -417,25 +556,54 @@ class ZController {
 
   readAllSolutionsByProposals(id) {
 
-    let path = 'proposals/' + id + '/solutions/';
+    let pathToSolution = 'proposals/' + id + '/solutions/';
 
-    firebase.database().ref(path).on('value', snapshot => {
+    firebase.database().ref(pathToSolution).on('value', snapshot => {
 
-      this.el.tbodySolution.innerHTML = '';
+      this.el.cardsSolutions.innerHTML = '';
+
+      let keyCart;
+      let dataCart;
+      let nicknameCart;
+      let priceSaleCart;
+      let quantityCart;
 
       snapshot.forEach(snapshotItem => {
 
         let key = snapshotItem.key;
         let data = snapshotItem.val();
         let solutionName = data.solutionName;
-        let subtotal = data.subtotal;
+        let subtotal = data.solutionTotal;
+
+        let pathCart = 'proposals/' + id + '/solutions/' + key + '/cart/';
 
         if (data !== '') {
 
-          this.el.tbodySolution.appendChild(this.getAllSolutionsByProposalView(subtotal, solutionName, data, key));
+
+          firebase.database().ref(pathCart).on('value', snapshotCart => {
+
+            snapshotCart.forEach(snapshotCartItem => {
+
+              keyCart = snapshotCartItem.key;
+              dataCart = snapshotCartItem.val();
+              console.log(dataCart.nickname)
+              if (keyCart !== '') {
+
+                nicknameCart = dataCart.nickname;
+                priceSaleCart = dataCart.priceSale;
+                quantityCart = dataCart.quantity;
+
+              }
+
+            });
+
+          });
+          
+
+          this.el.cardsSolutions.appendChild(this.getAllSolutionsByProposalView(subtotal, solutionName, data, key, nicknameCart, priceSaleCart, quantityCart));
 
         }
-
+        
       });
 
     });
@@ -443,50 +611,141 @@ class ZController {
   }
 
 
-  getAllSolutionsByProposalView(subtotal, solutionName, data, key) {
+  getAllSolutionsByProposalView(subtotal, solutionName, data, key, nicknameCart, priceSaleCart, quantityCart) {
 
-    let tr = document.createElement('tr');
+    let div = document.createElement('div');
 
-    tr.dataset.key = key;
-    tr.dataset.file = JSON.stringify(data);
-    tr.dataset.name = 'proposal-solution';
-    tr.dataset.solutionName = solutionName;
-    tr.dataset.subtotal = subtotal;
 
-    tr.innerHTML = `
-      <tr>
-        <td><div type="button" id="proposal-solution">${tr.dataset.solutionName}</div></td>
-        <td class="text-right">${tr.dataset.subtotal}</td>
-      </tr>
-    `;
+    
+    div.dataset.key = key;
+    div.dataset.file = data;
+    // div.dataset.name = 'add-product';
+    div.dataset.solutionName = solutionName;
+    div.dataset.subtotal = subtotal;
 
-    this.initEventsTr(tr);
+    // div.innerHTML = `
+    //   <div class="card">
+    //     <div class="card-header" id="heading-${div.dataset.key}">
+    //       <h5 class="mb-0 col-12">
+    //         <div class="row">
 
-    return tr;
+    //           <div class="col-9">
+    //             <button class="btn font-weight-bold" type="button" data-toggle="collapse"
+    //               data-target="#collapse-${div.dataset.key}" aria-expanded="false" aria-controls="collapse-${div.dataset.key}">
+    //               ${div.dataset.solutionName}
+    //             </button>
+    //           </div>
+
+    //           <div class="col-3 pt-2 text-right"><span class="h6">R$ ${div.dataset.subtotal}</span></div>
+    //         </div>
+    //       </h5>
+    //     </div>
+
+    //     <div id="collapse-${div.dataset.key}" class="collapse" aria-labelledby="heading-${div.dataset.key}" data-parent="#cards-solutions">
+    //       <div class="card-body">
+
+    //       <!-- Inicio do FORM -->
+    //       <section id="content-section">
+    //         <div class="row">
+    //           <div class="col-12">
+
+    //             <!-- Begin Page Content -->
+    //             <div class="container-fluid">
+
+    //               <!-- Page Heading -->
+    //               <div>
+    //                 <form id="form-add-product">
+    //                   <div class="form-row">
+                        
+    //                     <div class="form-group col-3">
+    //                       <label for="input-product-category">Categoria</label>
+    //                       <select class="form-control" id="input-product-category" name="productCategory">
+                            
+    //                       </select>
+    //                     </div>
+
+    //                     <div class="form-group col-4">
+    //                       <label for="input-product-nickname">Equipamento</label>
+    //                       <select class="form-control" id="input-product-nickname" name="productNickname">
+                            
+    //                       </select>
+    //                     </div>
+
+    //                     <div class="form-group col-md-2 text-center">
+    //                       <label for="input-product-quantity">Quant</label>
+    //                       <input type="text" class="form-control" id="input-product-quantity" name="productQuantity">
+    //                     </div>
+                        
+    //                     <div class="form-group col-3">
+    //                       <button id="btn-add-product" type="submit" class="btn btn-dark mt-4">Adicionar</button>
+    //                     </div>
+    //                   </div>
+    //                 </form>
+    //               </div>
+
+    //             </div>
+    //             <!-- /.container-fluid -->
+
+    //           </div>
+    //           <!-- End of Main Content -->
+
+    //         </div>
+    //       </section>
+    //       <!-- Fim do FORM -->
+          
+
+    //       <table class="table table-hover col-12">
+    //         <thead>
+    //           <tr>
+    //             <th scope="row">Produto</th>
+    //             <th scope="col" class="text-center">Quant</th>
+    //             <th scope="col" class="text-right">Valor</th>
+    //           </tr>
+    //         </thead>
+    //         <tbody id="tbody-solution">
+    //         <tr>
+    //           <td scope="row">${nicknameCart}</td>
+    //           <td scope="col" class="text-center">${quantityCart}</td>
+    //           <td scope="col" class="text-right">${priceSaleCart}</td>
+    //         </tr>
+    //         </tbody>
+    //       </table>
+    //       </div>
+    //     </div>
+    //   </div>
+    // `;
+
+    this.initEventsTr(div);
+
+    return div;
 
   }
 
 
   initEventsTr(tr) {
+
     tr.on('click', e => {
+
+      this.readAllFilterCategories();
+      this.readAllFilterProductsByCategory();
 
       switch (tr.dataset.name) {
         
         case ('open-proposal'):
         
-          $('#modal-add-customers').modal('hide');
-          $('#modal-add-proposal').modal('hide');
-          $('#modal-add-products').modal('hide');
-          $('#modal-add-solution').modal('show');
+          this.showPanelSolutions();
     
-          this.el.titleModalSolution.innerHTML = tr.dataset.proposalName + " | " + tr.dataset.proposalCustomer;
+          this.el.titlePanelSolution.innerHTML = tr.dataset.proposalName + " - " + tr.dataset.proposalCustomer;
           
-          this.readAllSolutionsByProposals(tr.dataset.key);
+          // Chama os arcodeos das soluçoes de uma determinada proposta
+          // this.readAllSolutionsByProposals(tr.dataset.key);
+
+          this.proposalKey = tr.dataset.key;
 
           break;
 
-        case ('proposal-solution'):
-          console.log('solution');
+        case ('add-product'):
+          console.log('ok');
           break;
       
         default:
@@ -494,6 +753,24 @@ class ZController {
       }
     
     });
+
+
+
+
+    // this.formControlSelectCategoriaEl.on('change', e => {
+
+    //       this.categoryName = this.selectCategory.options[this.selectCategory.selectedIndex].value;
+    
+    //       this.readAllFilterProductsByCategory(categoryName);
+    
+    //       console.log(this.readAllFilterProductsByCategory(this.categoryName));
+    //     });
+    
+
+    // this.el.addProduct.on('click', e => {
+    //   console.log('uhhhh');
+    // });
+
   }
 
 
@@ -511,6 +788,7 @@ class ZController {
     return option;
 
   }
+
 
   readAllFilterCustomers() {
 
@@ -533,6 +811,100 @@ class ZController {
       });
 
     });
+  }
+
+
+
+  getCategoryView(dataName, key) {
+
+    let option = document.createElement('option');
+
+    option.dataset.key = key;
+    option.dataset.file = dataName
+
+    option.innerHTML = `
+      <option id='categoryName' value='${dataName}'>${dataName}</option>
+    `;
+
+    return option;
+
+  }
+
+
+  readAllFilterCategories() {
+
+    firebase.database().ref("products").on('value', snapshot => {
+
+      this.el.inputProductCategory.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+        let dataName = data.categoria;
+
+        if (dataName !== '') {
+
+          this.arrayCategories.push(data.categoria);
+
+        }
+
+      });
+
+      const setUnico = new Set(this.arrayCategories);
+      const deVoltaAAray = [...setUnico];
+
+      deVoltaAAray.forEach(item => {
+
+        this.el.inputProductCategory.appendChild(this.getCategoryView(item));
+
+      });
+
+    });
+
+  }
+
+
+  getProductByCategoryView(data, key) {
+
+    let option = document.createElement('option');
+
+    option.dataset.key = key;
+    option.dataset.file = data;
+    option.dataset.price = data.precoVenda;
+
+    option.innerHTML = `
+      <option value='${key}' dataset-file='${data}' dataset-price='${data.precoVenda}'>${data.nomeFantasia}</option>
+    `;
+
+    return option;
+
+  }
+
+
+  readAllFilterProductsByCategory() {
+
+    this.categoryName = "Receiver";
+
+    firebase.database().ref("products").orderByChild("categoria").equalTo(this.categoryName).on('value', snapshot => {
+
+      this.el.inputProductNickname.innerHTML = '';
+
+      snapshot.forEach(snapshotItem => {
+
+        let key = snapshotItem.key;
+        let data = snapshotItem.val();
+
+        if (data !== '') {
+
+          this.el.inputProductNickname.appendChild(this.getProductByCategoryView(data, key));
+
+        }
+        
+      });
+
+    });
+
   }
 
 

@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Rogerio Fabricio Developer">
 
-  <title>.Z APP - Propostas</title>
+  <title>ZAFIRO APP - Propostas</title>
 
   <link href="bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet">
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 <body>
 
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm rounded">
-    <h1 class="ml-5 text-light">.Z</h1>
+    <h1 class="ml-5 text-light">ZAFIRO</h1>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -82,7 +82,12 @@
               </tr>
             </thead>
             <tbody id="tbody-customer">
-              
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="text-center"></td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
           <!-- Table Customers End -->
@@ -128,7 +133,12 @@
               </tr>
             </thead>
             <tbody id="tbody-proposal">
-             
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="text-center"></td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
           <!-- Table Proposals End -->
@@ -207,6 +217,143 @@
 
     </div>
     <!-- Products Panel End-->
+
+    <!-- Solution Panel -->
+    <div id="solutions-panel">
+      <div class="row">
+        <div class="col-12" style="margin-top: 80px;">
+          <h1><img src="src/img/icons/reader-outline.svg" alt="" width="32px" class="pb-2" /> Soluções | <span id="title-panel-solution"> </span></h1>
+    
+          <!-- Inicio do FORM -->
+    
+          <section id="content-section">
+            <div class="row">
+              <div class="col-12">
+    
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+    
+                  <!-- Page Heading -->
+                  <div>
+                    <form id="form-add-solution">
+                      <div class="form-row mt-5">
+                        <div class="form-group col-12 text-right">
+                          <span id="title-proposal-total" class="py-3 px-5 bg-dark mt-4 text-white rounded">Proposta R$ 0,00</span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+    
+                  <!-- Acodeoes -->
+                  <div id="cards-solutions" class="accordion mt-3">
+                    <div class="card">
+                      <div class="card-header" id="heading">
+                        <h5 class="mb-0 col-12">
+                          <div class="row">
+                            <div class="col-9"><button class="btn font-weight-bold" type="button" data-toggle="collapse"
+                                data-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                                Audio Gourmet
+                              </button></div>
+              
+                            <div class="col-3 pt-2 text-right"><span class="h6">R$ 1350</span></div>
+                          </div>
+                        </h5>
+                      </div>
+              
+                      <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#cards-solutions">
+                        <div class="card-body">
+
+                          <!-- Inicio do FORM -->
+                          <section id="content-section">
+                            <div class="row">
+                              <div class="col-12">
+
+                                <!-- Begin Page Content -->
+                                <div class="container-fluid">
+
+                                  <!-- Page Heading -->
+                                  <div>
+                                    <form id="form-add-product">
+                                      <div class="form-row">
+                                        
+                                        <div class="form-group col-3">
+                                          <label for="input-product-category">Categoria</label>
+                                          <select class="form-control" id="input-product-category" name="productCategory">
+                                            
+                                          </select>
+                                        </div>
+
+                                        <div class="form-group col-4">
+                                          <label for="input-product-nickname">Equipamento</label>
+                                          <select class="form-control" id="input-product-nickname" name="productNickname">
+                                            
+                                          </select>
+                                        </div>
+
+                                        <div class="form-group col-md-2 text-center">
+                                          <label for="input-product-quantity">Quant</label>
+                                          <input type="text" class="form-control" id="input-product-quantity" name="productQuantity">
+                                        </div>
+                                        
+                                        <div class="form-group col-3">
+                                          <button id="btn-add-product" type="submit" class="btn btn-dark mt-4">Adicionar</button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+
+                                </div>
+                                <!-- /.container-fluid -->
+
+                              </div>
+                              <!-- End of Main Content -->
+
+                            </div>
+                          </section>
+                          <!-- Fim do FORM -->
+
+                        <table class="table table-hover col-12">
+                          <thead>
+                            <tr>
+                              <th scope="row">Produto</th>
+                              <th scope="col" class="text-center">Quant</th>
+                              <th scope="col" class="text-right">Valor</th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbody-solution">
+                            <tr>
+                              <td scope="row">Emissor IR</td>
+                              <td scope="col" class="text-center">12</td>
+                              <td scope="col" class="text-right">1350</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                      </div>
+                    </div>
+    
+                    <!-- fim acordeoes -->
+                  </div>
+                  <!-- /.container-fluid -->
+    
+                </div>
+                <!-- End of Main Content -->
+    
+              </div>
+          </section>
+    
+          <!-- Fim do FORM -->
+    
+        </div>
+      </div>
+    
+      <!-- Float Button -->
+      <div class="zoom">
+        <a class="zoom-fab zoom-btn-large bg-dark text-light" id="zoom-btn-add-solutions">+</a>
+      </div>
+    
+    </div>
+    <!-- Solution Panel End-->
 
   </div>
 
@@ -470,12 +617,12 @@
   </div>
 
   <!--Modal Form Solution-->
-  <div class="modal fade bd-example-modal-lg" id="modal-add-solution" tabindex="-1" role="dialog">
+  <div class="modal fade bd-example-modal-lg" id="modal-add-solutions" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="h3 mb-4 text-gray-800">Proposta - <span id="title-modal-solution"></span></h1>
+          <h1 class="h3 mb-4 text-gray-800" id="title-solution-proposal">Nova Solução</h1>
           <button type="button" class="btn-close-modal-add" data-dismiss="modal">
             <span>&times;</span>
           </button>
@@ -495,157 +642,17 @@
                   <div>
                     <form id="form-add-solution">
                       <div class="form-row">
-                        <div class="form-group col-md-4">
-                          <label for="input-solution-name">Nova Solução</label>
+                        <div class="form-group col-10">
+                          <!-- <label for="input-solution-name">Nome da Solução</label> -->
                           <input type="text" class="form-control" id="input-solution-name" name="solutionName" placeholder="Referência para solução">
                         </div>
-                        <div class="form-group col-3">
-                          <button id="btn-save-solution" type="submit" class="btn btn-dark mt-4">Incluir Solução</button>
+                        <div class="form-group col-2">
+                          <button id="btn-save-solution" type="submit" class="btn btn-dark">Salvar</button>
                         </div>
                       </div>
                     </form>
                   </div>
 
-                  <!-- teste acodeoes -->
-                  <div class="accordion" id="accordionExample">
-                    <div class="card">
-                      <div class="card-header" id="headingOne">
-                        <h5 class="mb-0 col-12">
-                          <div class="row">
-                            <div class="col-9"><button class="btn font-weight-bold" type="button" data-toggle="collapse"
-                                data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Home Cinema
-                              </button></div>
-                  
-                            <div class="col-3 pt-2 text-right"><span class="h6">240,00</span></div>
-                          </div>
-                        </h5>
-                      </div>
-                  
-                      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
-                          
-                          <!-- Table Proposals -->
-                          <table class="table table-hover col-12">
-                            <thead>
-                              <tr>
-                                <th scope="col">Produto</th>
-                                <th scope="col" class="text-center">Quant.</th>
-                                <th scope="col" class="text-center">Total</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tbody-solution">
-                              <tr>
-                                <td scope="col">Receiver 7.2</td>
-                                <td scope="col" class="text-center">1</td>
-                                <td scope="col" class="text-center">100,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto LCR</td>
-                                <td scope="col" class="text-center">3</td>
-                                <td scope="col" class="text-center">80,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto Surround</td>
-                                <td scope="col" class="text-center">2</td>
-                                <td scope="col" class="text-center">60,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Receiver 7.2</td>
-                                <td scope="col" class="text-center">1</td>
-                                <td scope="col" class="text-center">100,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto LCR</td>
-                                <td scope="col" class="text-center">3</td>
-                                <td scope="col" class="text-center">80,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto Surround</td>
-                                <td scope="col" class="text-center">2</td>
-                                <td scope="col" class="text-center">60,00</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <!-- Table Proposals End -->
-                          
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card">
-                      <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0 col-12">
-                          <div class="row">
-                            <div class="col-9"><button class="btn font-weight-bold" type="button" data-toggle="collapse"
-                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Gourmet
-                              </button></div>
-                  
-                            <div class="col-3 pt-2 text-right"><span class="h6">140,00</span></div>
-                          </div>
-                        </h5>
-                      </div>
-                  
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                          
-                          <!-- Table Proposals -->
-                          <table class="table table-hover col-12">
-                            <thead>
-                              <tr>
-                                <th scope="col">Produto</th>
-                                <th scope="col" class="text-center">Quant.</th>
-                                <th scope="col" class="text-center">Total</th>
-                              </tr>
-                            </thead>
-                            <tbody id="tbody-solution">
-                              <tr>
-                                <td scope="col">Receiver 7.2</td>
-                                <td scope="col" class="text-center">1</td>
-                                <td scope="col" class="text-center">100,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto LCR</td>
-                                <td scope="col" class="text-center">3</td>
-                                <td scope="col" class="text-center">80,00</td>
-                              </tr>
-
-                              <tr>
-                                <td scope="col">Caixas de Teto Surround</td>
-                                <td scope="col" class="text-center">2</td>
-                                <td scope="col" class="text-center">60,00</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <!-- Table Proposals End -->
-                          
-                        </div>
-                      </div>
-                    </div>
-                    
-                  <!-- fim acordeoes -->
-
-                  <!-- Table Proposals -->
-                  <table class="table table-hover col-12 mt-5">
-                    <!-- <thead>
-                      <tr>
-                        <th scope="col">Solução</th>
-                        <th scope="col" class="text-center">Total</th>
-                      </tr>
-                    </thead> -->
-                    <tbody id="tbody-solution">
-
-                      
-                    </tbody>
-                  </table>
-                  <!-- Table Proposals End -->
                 </div>
                 <!-- /.container-fluid -->
 
