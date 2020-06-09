@@ -3,8 +3,6 @@ class ZController {
   constructor() {
 
 
-    // this.addProduct = document.getElementById('#add-product');
-
     this.connectFirebase();
     
     this.elementsPrototype();
@@ -19,8 +17,8 @@ class ZController {
     this.arrayCategories = [];
     this.categoryName = "";
 
-
   }
+
 
   connectFirebase() {
 
@@ -39,7 +37,6 @@ class ZController {
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
   }
-
 
 
   loadElements() {
@@ -123,7 +120,6 @@ class ZController {
     }
 
   }
-
 
 
   initEvents() {
@@ -240,15 +236,15 @@ class ZController {
     });
 
 
-    this.el.formAddProduct.on('submit', e => {
+    this.el.formAddItem.on('submit', e => {
 
       e.preventDefault();
 
-      this.el.btnAddProduct.css().disabled;
+      // this.el.btnAddProduct.css().disabled;
 
-      // this.addProductInSolutionDatabase(this.el.formAddProduct.toJSON());
+      this.addItemInSolutionDatabase(this.el.formAddItem.toJSON());
 
-    console.log(this.el.formAddProduct.toJSON());
+    console.log(this.el.formAddItem.toJSON());
     });
 
   }
@@ -317,7 +313,6 @@ class ZController {
 
   }
 
-
   addProposalDatabase(proposalData) {
 
     let timestamp = Date.now();
@@ -340,7 +335,6 @@ class ZController {
 
   }
 
-
   addSolutionDatabase(solutionData) {
 
     let timestamp = Date.now();
@@ -361,19 +355,18 @@ class ZController {
 
   }
 
-
-  addProductInSolutionDatabase(productInSolutionData) {
+  addItemInSolutionDatabase(itemInSolutionData) {
 
     let timestamp = Date.now();
-    let data = productInSolutionData;
-    data = {...data, timestamp}
+    let item = itemInSolutionData;
+    item = {...item, timestamp}
 
-    console.log(data);
+    console.log(item);
     
-    if (data) {
+    if (item) {
       
-      this.getFirebaseProductInSolutionsAddRef().set(
-        data
+      this.getFirebaseItemInSolutionsAddRef().set(
+        item
       );
 
     } else {
@@ -405,7 +398,6 @@ class ZController {
 
   }
 
-
   getFirebaseSolutionsAddRef(path) {
 
     let timestampNow = Date.now();
@@ -416,8 +408,7 @@ class ZController {
 
   }
 
-
-  getFirebaseProductInSolutionsAddRef(path) {
+  getFirebaseItemInSolutionsAddRef(path) {
 
     let timestampNow = Date.now();
 
@@ -427,7 +418,6 @@ class ZController {
     return firebase.database().ref(path);
 
   }
-
 
   getCustomersFirebaseRef(path) {
 
@@ -480,7 +470,6 @@ class ZController {
 
   }
 
-
   getProposalsFirebaseRef(path) {
 
     if (!path) path = 'proposals/';
@@ -488,7 +477,6 @@ class ZController {
     return firebase.database().ref(path);
 
   }
-
 
   readAllProposals() {
 
@@ -518,7 +506,6 @@ class ZController {
 
   }
 
-
   getAllProposalsView(data, key) {
 
     let tr = document.createElement('tr');
@@ -544,7 +531,6 @@ class ZController {
 
   }
 
-
   getSolutionsFirebaseRef(path) {
 
     if (!path) path = 'proposals/solutions/';
@@ -553,14 +539,13 @@ class ZController {
 
   }
 
-
   readAllSolutionsByProposals(id) {
 
     let pathToSolution = 'proposals/' + id + '/solutions/';
 
     firebase.database().ref(pathToSolution).on('value', snapshot => {
 
-      this.el.cardsSolutions.innerHTML = '';
+      //this.el.cardsSolutions.innerHTML = '';
 
       let keyCart;
       let dataCart;
@@ -576,9 +561,8 @@ class ZController {
         let subtotal = data.solutionTotal;
 
         let pathCart = 'proposals/' + id + '/solutions/' + key + '/cart/';
-
+        
         if (data !== '') {
-
 
           firebase.database().ref(pathCart).on('value', snapshotCart => {
 
@@ -586,7 +570,7 @@ class ZController {
 
               keyCart = snapshotCartItem.key;
               dataCart = snapshotCartItem.val();
-              console.log(dataCart.nickname)
+              
               if (keyCart !== '') {
 
                 nicknameCart = dataCart.nickname;
@@ -610,16 +594,13 @@ class ZController {
 
   }
 
-
   getAllSolutionsByProposalView(subtotal, solutionName, data, key, nicknameCart, priceSaleCart, quantityCart) {
 
     let div = document.createElement('div');
-
-
     
     div.dataset.key = key;
     div.dataset.file = data;
-    // div.dataset.name = 'add-product';
+    div.dataset.name = 'add-item';
     div.dataset.solutionName = solutionName;
     div.dataset.subtotal = subtotal;
 
@@ -654,7 +635,7 @@ class ZController {
 
     //               <!-- Page Heading -->
     //               <div>
-    //                 <form id="form-add-product">
+    //                 <form id="form-add-item">
     //                   <div class="form-row">
                         
     //                     <div class="form-group col-3">
@@ -677,7 +658,7 @@ class ZController {
     //                     </div>
                         
     //                     <div class="form-group col-3">
-    //                       <button id="btn-add-product" type="submit" class="btn btn-dark mt-4">Adicionar</button>
+    //                       <button id="btn-add-item" type="submit" class="btn btn-dark mt-4">Adicionar</button>
     //                     </div>
     //                   </div>
     //                 </form>
@@ -721,7 +702,6 @@ class ZController {
 
   }
 
-
   initEventsTr(tr) {
 
     tr.on('click', e => {
@@ -732,20 +712,23 @@ class ZController {
       switch (tr.dataset.name) {
         
         case ('open-proposal'):
-        
+
           this.showPanelSolutions();
     
           this.el.titlePanelSolution.innerHTML = tr.dataset.proposalName + " - " + tr.dataset.proposalCustomer;
           
           // Chama os arcodeos das soluçoes de uma determinada proposta
-          // this.readAllSolutionsByProposals(tr.dataset.key);
+          this.readAllSolutionsByProposals(tr.dataset.key);
 
           this.proposalKey = tr.dataset.key;
+          console.log('proposta', this.proposalKey);
 
           break;
 
-        case ('add-product'):
+        case ('add-item'):
           console.log('ok');
+          this.solutionKey = tr.dataset.key;
+          console.log('solucao', this.solutionKey);
           break;
       
         default:
@@ -789,7 +772,6 @@ class ZController {
 
   }
 
-
   readAllFilterCustomers() {
 
     this.getCustomersFirebaseRef().on('value', snapshot => {
@@ -813,8 +795,6 @@ class ZController {
     });
   }
 
-
-
   getCategoryView(dataName, key) {
 
     let option = document.createElement('option');
@@ -829,7 +809,6 @@ class ZController {
     return option;
 
   }
-
 
   readAllFilterCategories() {
 
@@ -853,8 +832,9 @@ class ZController {
 
       const setUnico = new Set(this.arrayCategories);
       const deVoltaAAray = [...setUnico];
+      console.log(deVoltaAAray.sort())
 
-      deVoltaAAray.forEach(item => {
+      deVoltaAAray.sort().forEach(item => {
 
         this.el.inputProductCategory.appendChild(this.getCategoryView(item));
 
@@ -863,7 +843,6 @@ class ZController {
     });
 
   }
-
 
   getProductByCategoryView(data, key) {
 
@@ -881,10 +860,9 @@ class ZController {
 
   }
 
-
   readAllFilterProductsByCategory() {
 
-    this.categoryName = "Receiver";
+    this.categoryName = "Rede";
 
     firebase.database().ref("products").orderByChild("categoria").equalTo(this.categoryName).on('value', snapshot => {
 
